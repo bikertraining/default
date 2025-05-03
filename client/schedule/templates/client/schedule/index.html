@@ -1,0 +1,192 @@
+{% extends "client/base.html" %}
+
+{% load static %}
+
+{% load get_brp_url %}
+
+{% block content %}
+    {% if object_list|length > 0 %}
+        <table class="caption-top table table-hover table-striped">
+            <caption class="d-print-none fw-bold mb-3 mt-2">
+                <i class="bi bi-exclamation-diamond"></i>
+                Click on a class to register
+
+                {% if class_type == '3wbrc' %}
+                    <div class="fw-bold mt-3 text-danger">
+                        You *must* bring your own 3-wheel motorcycle for training purposes and show proof of insurance.
+
+                        <div class="fw-normal mt-3 text-dark">
+                            <a class="btn btn-success btn-sm"
+                               href="{% get_brp_url %}"
+                               target="_blank">
+                                Click Here
+                            </a>
+
+                            for the
+
+                            <a href="{% get_brp_url %}"
+                               target="_blank">
+                                <img alt="Can-AM BRP"
+                                     class="img-fluid"
+                                     height="75"
+                                     src="{% static '/img/brp/logo.webp' %}"
+                                     width="150"/>
+                            </a>
+
+                            program. Can-AM will supply you with a training bike.
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if class_type == 'src' %}
+                    <div class="fw-bold mt-3 text-danger">
+                        You *must* bring your own motorcycle for training purposes and show proof of insurance.
+
+                        <div class="mt-3">
+                            You *must* have the motorcycle endorsement on your drivers license.
+                        </div>
+                    </div>
+                {% endif %}
+            </caption>
+
+            <thead class="border-dark border-2 border-start-0 border-end-0">
+            <tr>
+                <th class="w-25"
+                    scope="col">
+                    Dates
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Days
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Course
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Seats Available
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for value in object_list %}
+                <tr{% if value.seats > '0' %}
+                    onclick="location.href='{% url 'client-register-index' value.pk %}'"{% endif %}>
+                    <td>
+                        <div>
+                            {% if value.date_from == value.date_to %}
+                                {{ value.date_from|date:"M" }} {{ value.date_from|date:"j" }},
+                                {{ value.date_from|date:"Y" }}
+                            {% else %}
+                                {{ value.date_from|date:"M" }}
+                                {{ value.date_from|date:"j" }}-{{ value.date_to|date:"j" }},
+                                {{ value.date_from|date:"Y" }}
+                            {% endif %}
+                        </div>
+
+                        {% if value.seats > '0' %}
+                            <div class="badge rounded-pill bg-secondary border border-dark d-print-none">
+                                Sign Up Here
+                            </div>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="fw-bold">
+                            {{ value.get_day_type_display }}
+                        </div>
+
+                        {% if value.price.class_type == 'brc' %}
+                            <div>
+                                7:00 AM - 4:00 PM
+                            </div>
+                        {% endif %}
+
+                        {% if value.price.class_type == 'src' %}
+                            <div>
+                                12:00 PM (Noon) - 5:30 PM
+                            </div>
+                        {% endif %}
+
+                        {% if value.price.class_type == '3wbrc' %}
+                            {% if value.day_type == 'thursday_friday' %}
+                                <div>
+                                    <div>
+                                        Thursday 1:00 PM - 4:00 PM
+                                    </div>
+
+                                    <div>
+                                        Friday 7:00 AM - 4:00 PM
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if value.day_type == 'sunday_monday' %}
+                                <div>
+                                    <div>
+                                        Sunday 1:00 PM - 4:00 PM
+                                    </div>
+
+                                    <div>
+                                        Monday 7:00 AM - 4:00 PM
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div>
+                            {{ value.price.get_class_type_display }}
+                        </div>
+
+                        <div>
+                            ${{ value.price.amount|stringformat:"s"|slice:":-3" }}
+                        </div>
+                    </td>
+
+                    <td>
+                        {% if value.seats > '0' %}
+                            {{ value.seats }}
+                        {% elif value.seats == '0' and value.price.class_type == '3wbrc' %}
+                            Call for Availability
+                        {% else %}
+                            CLASS FULL
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if object_list|length == 0 and class_type == '3wbrc' %}
+        <div class="fw-bold mt-3 text-danger text-center">
+            Sorry but there are no available 3-Wheel classes. However, if you had a group of at least 2 students we can
+            add a private class. Call us for more information.
+        </div>
+    {% elif object_list|length == 0 and class_type == 'src' %}
+        <div class="fw-bold mt-3 text-danger text-center">
+            Sorry but there are no available Skilled Rider classes. However, if you had a group of at least 4 students
+            we can add a private class. Call us for more information.
+        </div>
+    {% elif object_list|length == 0 %}
+        <div class="fw-bold mt-3 text-danger text-center">
+            Sorry but there are no available classes.
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <style>
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #198754;
+            color: #FFFFFF;
+        }
+    </style>
+{% endblock %}

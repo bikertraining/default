@@ -1,0 +1,81 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    {% if object_list|length > 0 %}
+        <table class="table table-striped table-hover caption-top">
+            <caption class="d-print-none fw-bold mb-4 mt-2">
+                <i class="bi bi-exclamation-diamond"></i>
+                {{ object_list|length }} Classes
+            </caption>
+
+            <thead class="border border-dark border-2 border-start-0 border-end-0">
+            <tr>
+                <th class="w-25"
+                    scope="col">
+                    Dates
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Days
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Course
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Seats Available
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for value in object_list %}
+                <tr onclick="location.href='{% url 'admin-schedule-edit' value.pk %}'">
+                    <td>
+                        {% if value.date_from == value.date_to %}
+                            {{ value.date_from|date:"M" }} {{ value.date_from|date:"j" }},
+                            {{ value.date_from|date:"Y" }}
+                        {% else %}
+                            {{ value.date_from|date:"M" }} {{ value.date_from|date:"j" }}-{{ value.date_to|date:"j" }},
+                            {{ value.date_from|date:"Y" }}
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ value.get_day_type_display }}
+                    </td>
+
+                    <td>
+                        {{ value.price.get_class_type_display }}
+                    </td>
+
+                    <td>
+                        {% if value.seats > '0' %}
+                            {{ value.seats }}
+                        {% else %}
+                            CLASS FULL
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="fw-bold mt-3 text-danger">
+            Sorry but there are no available classes.
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <style>
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #198754;
+            color: #FFFFFF;
+        }
+    </style>
+{% endblock %}

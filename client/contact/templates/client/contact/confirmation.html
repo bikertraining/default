@@ -1,0 +1,22 @@
+{% extends "client/base.html" %}
+
+{% block content %}
+    <div class="fw-bold mt-3">
+        Thank you for contacting us!
+    </div>
+
+    <div class="mt-3">
+        We will reply to your message as soon as we can.
+    </div>
+
+    <div class="mt-3">
+        In the meantime, our
+
+        <a class="text-decoration-none"
+           href="{% url 'client-team-faq' %}">
+            FAQs
+        </a>
+
+        can answer most questions.
+    </div>
+{% endblock %}

@@ -1,0 +1,271 @@
+{% extends "client/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock %}
+
+{% load get_business_email %}
+
+{% load get_business_phone %}
+
+{% load get_brp_url %}
+
+{% load get_form_hidden %}
+
+{% load get_form_select_month %}
+
+{% load get_form_select_state %}
+
+{% load get_form_select_year %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
+            {% if class_type == '3wbrc' %}
+                <div class="fw-bold mb-3 text-danger">
+                    You *must* bring your own 3-wheel motorcycle for training purposes and show proof of insurance.
+                </div>
+            {% endif %}
+
+            {% if class_type == 'src' %}
+                <div class="fw-bold mb-3 text-danger">
+                    You *must* bring your own motorcycle for training purposes and show proof of insurance.
+
+                    <div class="mt-3">
+                        You *must* have the motorcycle endorsement on your drivers license.
+                    </div>
+                </div>
+            {% endif %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    There was a problem processing your payment. Your bank returned the following error:
+                </div>
+
+                <div class="text-danger my-3 fs-5 rounded-3 border border-2 border-danger">
+                    <span class="mx-2">{{ error }}</span>
+                </div>
+            {% endfor %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% get_form_hidden name='class_type' value=defaults.class_type|default:'' %}
+
+                <div class="row">
+                    <h2 class="fs-4 mb-3">
+                        <i class="bi bi-credit-card"></i>
+                        Payment
+                    </h2>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='First Name' name='credit_card_first_name' required=True help_text='First name as displayed on card' error_text=form.credit_card_first_name.errors value=form.credit_card_first_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Last Name' name='credit_card_last_name' required=True help_text='Last name as displayed on card' error_text=form.credit_card_last_name.errors value=form.credit_card_last_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Credit Card Number' name='credit_card_number' required=True maxlength='16' is_cc=True error_text=form.credit_card_number.errors value=form.credit_card_number.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='CVV' name='credit_card_cvv2' required=True maxlength='4' error_text=form.credit_card_cvv2.errors value=form.credit_card_cvv2.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {% get_form_select_month label='Expiration Month' name='credit_card_month' required=True error_text=form.credit_card_month.errors value=form.credit_card_month.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_select_year label='Expiration Year' name='credit_card_year' required=True error_text=form.credit_card_year.errors value=form.credit_card_year.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        {% get_form_text label='Address' name='address' required=True error_text=form.address.errors value=form.address.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-5">
+                        {% get_form_text label='City' name='city' required=True error_text=form.city.errors value=form.city.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        {% get_form_select_state label='State' name='state' required=True error_text=form.state.errors value=form.state.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-3">
+                        {% get_form_text label='Zipcode' name='zipcode' required=True maxlength='28' error_text=form.zipcode.errors value=form.zipcode.value|default:'' %}
+                    </div>
+                </div>
+
+                <hr/>
+
+                <h2 class="fs-4 mt-4 mb-3">
+                    <i class="bi bi-person-plus-fill"></i>
+                    Student Enrollment
+                </h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% get_form_text label='First Name' name='first_name' required=True help_text="As printed on students Drivers License" error_text=form.first_name.errors value=form.first_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Last Name' name='last_name' required=True help_text="As printed on students Drivers License" error_text=form.last_name.errors value=form.last_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Email' name='email' required=True error_text=form.email.errors value=form.email.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Phone Number' name='phone' required=True error_text=form.phone.errors value=form.phone.value|default:'' %}
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="row">
+                    <h2 class="fs-4 mb-3">
+                        <i class="bi bi-tag-fill"></i>
+                        Coupon
+                    </h2>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Code' name='coupon_code' help_text="If the coupon is valid, the price will be adjusted. One-Time-Use codes may not be readily available from Harley-Davidson." required=False error_text=form.coupon_code.errors value=form.coupon_code.value|default:'' %}
+                    </div>
+                </div>
+
+                <div class="fw-bold mt-3">
+                    Total ${{ defaults.amount|slice:":-3" }}
+                </div>
+
+                <div>
+                    <span class="fw-bold">Protected by</span>
+
+                    <img alt="Protected by Let's Encrypt"
+                         class="mt-3"
+                         height="50"
+                         src="{% static '/img/le/logo.webp' %}"
+                         width="169"/>
+                </div>
+
+                <button class="w-100 btn btn-success btn-lg"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    <i class="bi bi-file-lock2-fill"></i>
+                    Pay Now
+                </button>
+            </form>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
+            <a href="https://www.pensacolaharley.com/"
+               target="_blank">
+                <img alt="Pensacola Harley-Davidson"
+                     class="img-fluid mt-4"
+                     height="97"
+                     loading="eager"
+                     src="{% static '/img/phd/logo.webp' %}"
+                     width="400"/>
+            </a>
+
+            <div class="mt-3">
+                You can use this form to pay online for your class or give us a call at
+
+                <a class="text-decoration-none"
+                   href="tel:{% get_business_phone True %}">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+
+            <div class="mt-3 mb-3">
+                Please ensure the First and Last name is that of the student who is enrolled.
+            </div>
+
+            <hr/>
+
+            <h5 class="fs-4">
+                <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                Notice
+            </h5>
+
+            <div>
+                After submitting your application, you will receive an email by the next business day (or before your
+                class starts) confirming your enrollment and providing all details about your specific class. If you’d
+                prefer to enroll on the phone, give us a call at
+                <a class="text-decoration-none"
+                   href="tel:{% get_business_phone True %}">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+
+            <div class="fw-bold mt-3">
+                REFUND / CANCELLATION POLICY
+            </div>
+
+            <div class="mt-2">
+                When enrolling, you are purchasing a seat in the class of your choice. Once purchased, that seat is
+                set aside for only your use. Please select the date that will ensure you can attend each day for the
+                times indicated. You must attend all class/range sessions.
+            </div>
+
+            <div class="mt-2">
+                <span class="fw-bold">Cancellation:</span>
+
+                All fees are nonrefundable unless students call
+
+                <a class="text-decoration-none"
+                   href="tel:{% get_business_phone True %}">
+                    {% get_business_phone False %}
+                </a>
+
+                or email
+
+                <a href="mailto: {% get_business_email %}"
+                   class="text-decoration-none">
+                    {% get_business_email %}
+                </a>
+
+                6 days prior to their scheduled class to obtain a partial refund. A partial refund is full tuition minus
+                a ${{ defaults.process_amount|slice:":-3" }} processing fee.
+            </div>
+
+            <div class="mt-2">
+                There is a minimum of four students per class. If minimum is not met, student will have the option to
+                move to any future class or receive a full refund.
+            </div>
+
+            <div class="mt-2">
+                <span class="fw-bold">Postponement:</span>
+
+                There is no charge for postponement provided the student calls or emails at least 48 hours prior to the
+                start of their scheduled class. If less than 48 hours prior or if a student does not complete the entire
+                class, a seat in a subsequent class may be purchased.
+            </div>
+
+            <div class="mt-2">
+                <span class="fw-bold">Late Arrivals:</span>
+
+                Learning to ride a motorcycle requires skill progression. This progression begins with small tasks and
+                builds to larger, more complex tasks. It is critical that students arrive on time. Preferably, come
+                early! If you miss a class or range session, you will not be allowed to complete the course and will
+                have to purchase another seat in a later class.
+            </div>
+
+            {% if defaults.class_type != 'src' %}
+                <div class="mt-2">
+                    <span class="fw-bold">eCourse:</span>
+
+                    The eCourse is a national requirement for motorcycle training. You will be emailed a unique link to
+                    complete the eCourse before attending class.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

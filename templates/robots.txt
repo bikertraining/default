@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /contact/confirmation
+Disallow: /payment/
+Disallow: /team/confirmation
+
+Sitemap: http://bikertraining.com/sitemap.xml

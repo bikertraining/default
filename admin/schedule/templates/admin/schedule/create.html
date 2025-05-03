@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css"
+          integrity="sha256-bZRrQVK1rYvxccX8WACyWguD6Ba0h4h/Qs6vmJP2Pws=" crossorigin="anonymous">
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"
+            integrity="sha256-iZp9dyOMJKPFdn1UMra9ZMhPZAlSGZUzdhqqEgijE+Q=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $('#date_from').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+
+        $('#date_to').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+    </script>
+{% endblock %}
+
+{% load get_form_select %}
+
+{% load get_form_select_seat %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="d-inline-flex">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% get_form_select label='Class Type' name='price' required=True options=form.fields.price.choices error_text=form.price.errors value=form.price.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_select label='Day Type' name='day_type' required=True options=form.fields.day_type.choices error_text=form.day_type.errors value=form.day_type.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_text label='Starting Date' name='date_from' help_text='YYYY-MM-DD' required=True error_text=form.date_from.errors value=form.date_from.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_text label='Ending Date' name='date_to' help_text='YYYY-MM-DD' required=True error_text=form.date_to.errors value=form.date_to.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-12">
+                        {% get_form_select_seat label='Seats' name='seats' required=True error_text=form.seats.errors value=form.seats.value|default:'' %}
+                    </div>
+                </div>
+
+                <button class="px-4 btn btn-outline-success mt-3"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    Create
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

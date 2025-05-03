@@ -1,0 +1,196 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css"
+          integrity="sha256-bZRrQVK1rYvxccX8WACyWguD6Ba0h4h/Qs6vmJP2Pws=" crossorigin="anonymous">
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"
+            integrity="sha256-iZp9dyOMJKPFdn1UMra9ZMhPZAlSGZUzdhqqEgijE+Q=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $('#date_from').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+
+        $('#date_to').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+    </script>
+{% endblock %}
+
+{% load get_form_select %}
+
+{% load get_form_select_seat %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="d-inline-flex">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% get_form_select label='Class Type' name='price' required=True options=form.fields.price.choices error_text=form.price.errors value=object.price.class_type %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_select label='Day Type' name='day_type' required=True options=form.fields.day_type.choices error_text=form.day_type.errors value=object.day_type %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_text label='Starting Date' name='date_from' help_text='YYYY-MM-DD' required=True error_text=form.date_from.errors value=object.date_from %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_text label='Ending Date' name='date_to' help_text='YYYY-MM-DD' required=True error_text=form.date_to.errors value=object.date_to %}
+                    </div>
+
+                    <div class="col-md-12">
+                        {% get_form_select_seat label='Seats' name='seats' required=True error_text=form.seats.errors value=object.seats %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button class="px-4 btn btn-outline-success mt-3"
+                            onclick="document.getElementById('loading').style.display = 'block'"
+                            type="submit">
+                        Update
+                    </button>
+
+                    <button class="px-4 btn btn-danger mt-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal"
+                            type="button">
+                        <i class="bi bi-trash3"></i>
+                        Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <form action="{% url 'admin-schedule-delete' object.id %}"
+          method="post">
+        {% csrf_token %}
+        <div aria-hidden="true"
+             aria-labelledby="deleteModalLabel"
+             class="modal fade"
+             id="deleteModal"
+             tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5"
+                            id="deleteModalLabel">
+                            <i class="bi bi-exclamation-triangle text-danger"></i>
+                            Warning
+                        </h1>
+
+                        <button aria-label="Close"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                type="button">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        Continuing will remove this schedule.
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                                type="button">
+                            <i class="bi bi-x"></i>
+                            Close
+                        </button>
+
+                        <button class="btn btn-danger"
+                                onclick="document.getElementById('loading').style.display = 'block'"
+                                type="submit">
+                            <i class="bi bi-trash3"></i>
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if students|length > 0 %}
+        <table class="table table-striped table-hover caption-top mt-3">
+            <caption class="d-print-none fw-bold mb-3 mt-2">
+                <i class="bi bi-exclamation-diamond"></i>
+                {{ students.length }} Students
+            </caption>
+
+            <thead class="border border-dark border-2 border-start-0 border-end-0">
+            <tr>
+                <th class="w-25"
+                    scope="col">
+                    Name
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Email
+                </th>
+
+                <th class="w-25"
+                    scope="col">
+                    Phone
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for value in students %}
+                <tr onclick="location.href='{% url 'admin-schedule-print' value.schedule.pk value.pk %}'">
+                    <td>
+                        {{ value.first_name }} {{ value.last_name }}
+                    </td>
+
+                    <td>
+                        {{ value.email }}
+                    </td>
+
+                    <td>
+                        {{ value.phone }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <style>
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #198754;
+            color: #FFFFFF;
+        }
+    </style>
+{% endblock %}

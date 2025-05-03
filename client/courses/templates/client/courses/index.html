@@ -1,0 +1,203 @@
+{% extends "client/base.html" %}
+
+{% load get_business_phone %}
+
+{% block content %}
+    <div class="row mt-1 justify-content-center">
+        <div class="col-lg-4 col-md-8 col-sm-12 mt-3">
+            <div class="card shadow">
+                <div class="card-header bg-dark fs-4 text-center text-white">
+                    Basic RiderCourse (BRCu)
+                </div>
+
+                <div class="card-body">
+                    <div class="card-title text-center fs-2">
+                        ${{ price.amount_brc|slice:":-3" }}
+                    </div>
+
+                    <div class="card-text">
+                        This course meets the State of Florida license endorsement requirement. This course is for those
+                        new to riding and is also a great course for those that are coming back to motorcycle riding.
+                        Each student will be provided their own motorcycle.
+                    </div>
+                </div>
+
+                <div class="card-footer border-0 text-center"
+                     style="background-color: inherit;">
+                    <div>
+                        <a class="btn btn-lg btn-outline-success w-100 mb-3"
+                           href="{% url 'client-schedule-index' %}">
+                            <i class="bi bi-calendar3"></i>
+                            Basic RiderCourse Schedule
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="btn btn-lg btn-outline-primary w-100"
+                           href="{% url 'client-courses-brc' %}">
+                            <i class="bi bi-info-circle"></i>
+                            More Information
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-8 col-sm-12 mt-3">
+            <div class="card shadow">
+                <div class="card-header bg-dark fs-4 text-center text-white">
+                    3-Wheel Basic RiderCourse (3WBRCu)
+                </div>
+
+                <div class="card-body">
+                    <div class="card-title text-center fs-2">
+                        ${{ price.amount_3wbrc|slice:":-3" }}
+                    </div>
+
+                    <div class="card-text">
+                        This course meets the State of Florida license endorsement requirement. This course is for those
+                        who want to learn to ride a 3-wheel motorcycle. Students must provide their own 3-wheel
+                        motorcycle for the training.
+                    </div>
+                </div>
+
+                <div class="card-footer border-0 text-center"
+                     style="background-color: inherit;">
+                    <div>
+                        <a class="btn btn-lg btn-outline-success w-100 mb-3"
+                           href="{% url 'client-schedule-class-type' '3wbrc' %}">
+                            <i class="bi bi-calendar3"></i>
+                            3-Wheel RiderCourse Schedule
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="btn btn-lg btn-outline-primary w-100"
+                           href="{% url 'client-courses-3wbrc' %}">
+                            <i class="bi bi-info-circle"></i>
+                            More Information
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-8 col-sm-12 mt-3">
+            <div class="card shadow">
+                <div class="card-header bg-dark fs-4 text-center text-white">
+                    Skilled RiderCourse (BRCu2)
+                </div>
+
+                <div class="card-body">
+                    <div class="card-title text-center fs-2">
+                        ${{ price.amount_src|slice:":-3" }}
+                    </div>
+
+                    <div class="card-text">
+                        For those that already ride and have their motorcycle endorsement but want to be better. This
+                        course is designed for those that have been riding for at least three months and are ready to
+                        obtain new skills.
+                    </div>
+                </div>
+
+                <div class="card-footer border-0 text-center"
+                     style="background-color: inherit;">
+                    <div>
+                        <a class="btn btn-lg btn-outline-success w-100 mb-3"
+                           href="{% url 'client-schedule-class-type' 'src' %}">
+                            <i class="bi bi-calendar3"></i>
+                            Skilled RiderCourse Schedule
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="btn btn-lg btn-outline-primary w-100"
+                           href="{% url 'client-courses-src' %}">
+                            <i class="bi bi-info-circle"></i>
+                            More Information
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-1 justify-content-center justify-content-lg-start">
+        <div class="col-lg-4 col-md-8 col-sm-12 mt-3">
+            <div class="card shadow">
+                <div class="card-header bg-dark fs-4 text-center text-white">
+                    Kickstart
+                </div>
+
+                <div class="card-body">
+                    <div class="card-title text-center fs-2">
+                        ${{ price.amount_ime|slice:":-3" }}
+                    </div>
+
+                    <div class="card-text">
+                        The KickStart Course is for students that have not reached a level of comfort that will enable
+                        them to continue with the course. True novice riders may find the slower pace helpful when
+                        learning the initial control skills and gain greater comfort and familiarity with the
+                        motorcycle.
+                    </div>
+                </div>
+
+                <div class="card-footer border-0 text-center"
+                     style="background-color: inherit;">
+                    <div>
+                        <a class="btn btn-lg btn-outline-danger w-100 mb-3"
+                           href="tel:{% get_business_phone True %}">
+                            <i class="bi bi-telephone-fill"></i>
+                            {% get_business_phone False %}
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="btn btn-lg btn-outline-primary w-100"
+                           href="{% url 'client-courses-kickstart' %}">
+                            <i class="bi bi-info-circle"></i>
+                            More Information
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-8 col-sm-12 mt-3">
+            <div class="card shadow">
+                <div class="card-header bg-dark fs-4 text-center text-white">
+                    Private Lessons
+                </div>
+
+                <div class="card-body">
+                    <div class="card-title text-center fs-2">
+                        ${{ price.amount_private|slice:":-3" }}
+                    </div>
+
+                    <div class="card-text">
+                        Private instruction is available for riders of all skill levels from beginners to advanced.
+                    </div>
+                </div>
+
+                <div class="card-footer border-0 text-center mt-5"
+                     style="background-color: inherit;">
+                    <div>
+                        <a class="btn btn-lg btn-outline-danger w-100 mb-3"
+                           href="tel:{% get_business_phone True %}">
+                            <i class="bi bi-telephone-fill"></i>
+                            {% get_business_phone False %}
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="btn btn-lg btn-outline-primary w-100"
+                           href="{% url 'client-courses-private' %}">
+                            <i class="bi bi-info-circle"></i>
+                            More Information
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

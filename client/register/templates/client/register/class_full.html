@@ -1,0 +1,42 @@
+{% extends "client/base.html" %}
+
+{% load get_business_email %}
+
+{% load get_business_phone %}
+
+{% block content %}
+    <h1 class="fs-4 mt-3">
+        <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+        Class Full
+    </h1>
+
+    <div class="mt-3">
+        Thank you for your interest in one of our motorcycle courses.
+    </div>
+
+    <div class="mt-3">
+        Unfortunately, the class you selected is full. If there was an open seat when you tried to register, it's likely that someone else was just faster at registering and has taken that last seat.
+    </div>
+
+    <div class="mt-3 fw-bold text-danger">
+        Your credit card has not been charged.
+    </div>
+
+    <div class="mt-3">
+        Please take a look at our
+        <a class="text-decoration-none"
+           href="{% url 'client-schedule-index' %}">
+            schedule
+        </a>
+        to see if there are any other classes available.
+    </div>
+
+    <div class="mt-3">
+        If you believe this is an error or would like to be placed on a Waiting List, please call us at
+
+        <a class="text-decoration-none"
+           href="tel:{% get_business_phone True %}">
+            {% get_business_phone False %}
+        </a>
+    </div>
+{% endblock %}

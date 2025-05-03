@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock %}
+
+{% load get_form_switch %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="d-inline-flex">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% get_form_text label='Amount' name='amount' required=True error_text=form.amount.errors value=object.amount %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Re-Enrollment Amount' name='re_amount' required=True error_text=form.re_amount.errors value=object.re_amount %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_text label='Cancellation Fee' name='process_amount' required=True error_text=form.process_amount.errors value=object.process_amount %}
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        {% get_form_switch label='Charge Mode' name='is_active' help_text='Should this charge be processed?' value=object.is_active %}
+                    </div>
+                </div>
+
+                <button class="px-4 btn btn-outline-success"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

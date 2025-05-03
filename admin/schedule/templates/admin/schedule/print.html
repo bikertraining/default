@@ -1,0 +1,109 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <div class="my-3 mx-1">
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Name
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.first_name }} {{ registration.last_name }} {{ registration.suffix }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Address
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.address }}<br> {{ registration.city }}, {{ registration.state }} {{ registration.zipcode }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Phone
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.phone }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Email
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.email }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Drivers License Number
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.dln }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Date of Birth
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.dob }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            License State of Issue
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.dls }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Class Schedule
+        </div>
+
+        <div class="ps-2 py-2">
+            <div>
+                {{ registration.schedule_date }} {{ registration.schedule_day }}
+            </div>
+
+            <div>
+                {{ registration.class_type }} - ${{ registration.amount }}
+            </div>
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Credit Card
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.credit_card_number }} {% if registration.coupon_code != '' %}with Coupon Code: {{ registration.coupon_code }}{% endif %}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            Experience
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.xpl }}
+        </div>
+
+        {% if registration.comment != '' %}
+            <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+                Comments
+            </div>
+
+            <div class="ps-2 py-2">
+                {{ registration.comment }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        div {
+            -webkit-print-color-adjust: exact;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "admin/auth.html" %}
+
+{% load static %}
+
+{% load get_form_password %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="back">
+        <div class="div-center border border-dark">
+            <div class="content">
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'client-main-index' %}">
+                        <img alt="Login"
+                             height="100"
+                             loading="eager"
+                             src="{% static '/img/bikertraining/logo_llc_color.webp' %}"
+                             width="255"/>
+                    </a>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="col-md-12">
+                        {% get_form_text label='Username' name='username' required=True error_text=form.username.errors value=form.username.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        {% get_form_password label='Password' name='password' required=True error_text=form.password.errors value=form.password.value|default:'' %}
+                    </div>
+
+                    <button class="w-100 btn btn-outline-success mt-3"
+                            onclick="document.getElementById('loading').style.display = 'block'"
+                            type="submit">
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .back {
+            background: #e2e2e2;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+
+        .content {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .div-center {
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            padding: 1em 2em;
+            border-bottom: 2px solid #ccc;
+            display: table;
+        }
+    </style>
+{% endblock %}

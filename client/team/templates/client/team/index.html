@@ -1,0 +1,100 @@
+{% extends "client/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock %}
+
+{% load get_form_text %}
+
+{% load get_form_textarea %}
+
+{% load honeypot %}
+
+{% block content %}
+    <h1 class="fs-4 mt-3">
+        <i class="bi bi-people-fill"></i>
+        Join our Team
+    </h1>
+
+    <div>
+        Are you interested in becoming a RiderCoach or are you already a RiderCoach? We should talk!
+    </div>
+
+    <div class="mt-3">
+        Read our
+
+        <a class="text-decoration-none"
+           href="{% url 'client-team-faq' %}">
+            RiderCoach FAQ
+        </a>
+
+        to help answer most questions.
+    </div>
+
+    <div class="mt-3">
+        Use the form below and we'll contact you to setup a day and time we can meet up in person.
+    </div>
+
+    <div class="mt-3 mb-3">
+        We will tour our training facility and go over all your questions and concerns.
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
+        <form method="post">
+            {% csrf_token %}
+
+            {% render_honeypot_field 'email' %}
+
+            <div class="row d-inline-flex">
+                <div class="col-md-6">
+                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+                </div>
+
+                <div class="col-md-6">
+                    {% get_form_text label='Email' name='contact' required=True error_text=form.contact.errors value=form.contact.value|default:'' %}
+                </div>
+
+                <div class="col-md-6">
+                    {% get_form_text label='Phone' name='phone' required=True error_text=form.phone.errors value=form.phone.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='What motivates you to be a RiderCoach?' name='message1' required=True rows='7' error_text=form.message1.errors value=form.message1.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='If hired, how long do you plan to stay with the company?' name='message2' required=True rows='7' error_text=form.message2.errors value=form.message2.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='Are you looking for a permanent position or seasonal?' name='message3' required=True rows='7' error_text=form.message3.errors value=form.message3.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='Classes are typically held on Saturday-Sunday, Monday-Tuesday, or Thursday-Friday from 6AM to 4PM, will this conflict with your current schedule?' name='message4' required=True rows='7' error_text=form.message4.errors value=form.message4.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='How do you deal with pressure or stressful situations?' name='message5' required=True rows='7' error_text=form.message5.errors value=form.message5.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='Could you tell me about yourself and describe your background in brief?' name='message6' required=True rows='7' error_text=form.message6.errors value=form.message6.value|default:'' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% get_form_textarea label='Questions / Comments' name='message7' required=True rows='7' error_text=form.message7.errors value=form.message7.value|default:'' %}
+                </div>
+
+                <button class="btn btn-success btn-lg w-75 mx-2"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    <i class="bi bi-chat-fill"></i>
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

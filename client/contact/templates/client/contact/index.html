@@ -1,0 +1,85 @@
+{% extends "client/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock %}
+
+{% load get_business_email %}
+
+{% load get_business_phone %}
+
+{% load get_form_text %}
+
+{% load get_form_textarea %}
+
+{% load honeypot %}
+
+{% block content %}
+    <h1 class="fs-4 mt-3">
+        <i class="bi bi-envelope-at-fill"></i>
+        Contact Us
+    </h1>
+
+    <div>
+        If you have any questions / concerns please let us know.
+    </div>
+
+    <div class="mt-3">
+        <span class="fw-bold">Phone:</span>
+
+        <a class="text-decoration-none"
+           href="tel:{% get_business_phone True %}">
+            {% get_business_phone False %}
+        </a>
+    </div>
+
+    <div class="mt-3">
+        <span class="fw-bold">Email:</span>
+
+        <a href="mailto: {% get_business_email %}"
+           class="text-decoration-none">
+            {% get_business_email %}
+        </a>
+    </div>
+
+    <div class="d-flex flex-row mt-3">
+        <span class="fw-bold">Mailing Address:&nbsp;</span>
+
+        Biker Training LLC
+        <br>6385 Pensacola Blvd
+        <br>Pensacola, Florida, 32505
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% render_honeypot_field 'email' %}
+
+        <div class="row d-inline-flex">
+            <div class="col-md-6">
+                {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+            </div>
+
+            <div class="col-md-6">
+                {% get_form_text label='Email' name='contact' required=True error_text=form.contact.errors value=form.contact.value|default:'' %}
+            </div>
+
+            <div class="col-md-6">
+                {% get_form_text label='Phone' name='phone' required=False error_text=form.phone.errors value=form.phone.value|default:'' %}
+            </div>
+
+            <div class="col-md-12">
+                {% get_form_textarea label='Questions / Comments' name='message' required=True rows='7' error_text=form.message.errors value=form.message.value|default:'' %}
+            </div>
+
+            <button class="btn btn-lg btn-success w-75 mx-2"
+                    onclick="document.getElementById('loading').style.display = 'block'"
+                    type="submit">
+                <i class="bi bi-chat-fill"></i>
+                Submit
+            </button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css"
+          integrity="sha256-bZRrQVK1rYvxccX8WACyWguD6Ba0h4h/Qs6vmJP2Pws=" crossorigin="anonymous">
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"
+            integrity="sha256-iZp9dyOMJKPFdn1UMra9ZMhPZAlSGZUzdhqqEgijE+Q=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $('#date_to').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+
+        $('#frtp_date_from').datepicker(
+            {
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            }
+        );
+    </script>
+{% endblock %}
+
+{% load get_form_select_state %}
+
+{% load get_form_text %}
+
+{% block content %}
+    <div class="mt-3">
+        <div class="d-inline-flex">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Address' name='address' required=True error_text=form.address.errors value=form.address.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_text label='City' name='city' required=True error_text=form.city.errors value=form.city.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_select_state label='State' name='state' required=True error_text=form.state.errors value=form.state.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_text label='Zipcode' name='zipcode' required=True error_text=form.zipcode.errors value=form.zipcode.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Email' name='email' required=True error_text=form.email.errors value=form.email.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Phone' name='phone' required=True error_text=form.phone.errors value=form.phone.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_text label='MSF ID' name='msf_id' required=False error_text=form.msf_id.errors value=form.msf_id.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_text label='MSF Expiration Date' name='date_to' required=True help_text='YYYY-MM-DD' error_text=form.date_to.errors value=form.date_to.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4">
+                        {% get_form_text label='FRTP Update Date' name='frtp_date_from' required=True help_text='YYYY-MM-DD' error_text=form.frtp_date_from.errors value=form.frtp_date_from.value|default:'' %}
+                    </div>
+                </div>
+
+                <button class="px-4 btn btn-success mt-3"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    Create
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
