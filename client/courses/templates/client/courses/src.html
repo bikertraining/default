@@ -1,5 +1,22 @@
 {% extends "client/base.html" %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "description": "Skilled RiderCourse to fine-tune your riding and mental skills needed for survival in traffic.",
+          "name": "Skilled RiderCourse (BRCu2)",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "price": "{{ price.amount }}",
+            "priceCurrency": "USD"
+          }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="card mt-3">
         <div class="card-header bg-dark fs-4 text-white">
@@ -61,7 +78,7 @@
                     Important: You are purchasing a seat in the class of your choice. After you select and confirm the
                     date of the class that best fits your schedule, fees are nonrefundable. You must attend all
                     class/range sessions. If you miss a class or range session or for any reason do not fully complete
-                    your class, you can purchase a seat in a subsequent class for ${# formObj['src']['re_amount'] #}.
+                    your class, you can purchase a seat in a subsequent class for ${{ price.re_amount|slice:":-3" }}.
                 </div>
             </div>
         </div>

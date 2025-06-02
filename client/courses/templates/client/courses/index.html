@@ -2,6 +2,72 @@
 
 {% load get_business_phone %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+         "@context": "https://schema.org",
+         "@type": "BreadcrumbList",
+         "itemListElement":
+         [
+          {
+           "@type": "ListItem",
+           "position": 1,
+           "item":
+           {
+            "@id": "https://bikertraining.com/courses/",
+            "name": "Motorcycle Courses"
+            }
+          },
+          {
+           "@type": "ListItem",
+          "position": 2,
+          "item":
+           {
+             "@id": "https://bikertraining.com/courses/brc",
+             "name": "Basic RiderCourse (BRCu)"
+           }
+          },
+          {
+           "@type": "ListItem",
+          "position": 3,
+          "item":
+           {
+             "@id": "https://bikertraining.com/courses/3wbrc",
+             "name": "3-Wheel Basic RiderCourse (3WBRCu)"
+           }
+          },
+          {
+           "@type": "ListItem",
+          "position": 4,
+          "item":
+           {
+             "@id": "https://bikertraining.com/courses/src",
+             "name": "Skilled RiderCourse (BRCu2)"
+           }
+          },
+          {
+           "@type": "ListItem",
+          "position": 5,
+          "item":
+           {
+             "@id": "https://bikertraining.com/courses/kickstart",
+             "name": "Kickstart RiderCourse (IME)"
+           }
+          },
+          {
+           "@type": "ListItem",
+          "position": 6,
+          "item":
+           {
+             "@id": "https://bikertraining.com/courses/private",
+             "name": "Private Lessons"
+           }
+          }
+         ]
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="row mt-1 justify-content-center">
         <div class="col-lg-4 col-md-8 col-sm-12 mt-3">

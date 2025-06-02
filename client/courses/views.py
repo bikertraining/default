@@ -16,8 +16,21 @@ class Brc3W(generic.TemplateView):
         context['description'] = '3-Wheel Basic Rider Course'
         context['keywords'] = '3 wheel, three wheel motorcycle class, 3 wheel motorcycle class, trike class'
         context['title'] = '3-Wheel Basic Rider Course'
+        context['price'] = self.get_price()
 
         return context
+
+    @staticmethod
+    def get_price():
+        try:
+            result = models.Price.objects.get(class_type='3wbrc')
+        except models.Price.DoesNotExist:
+            raise Http404('Class Type does not exist')
+
+        return {
+            'amount': str(result.amount),
+            're_amount': str(result.re_amount)
+        }
 
 
 class Brc(generic.TemplateView):
@@ -33,8 +46,21 @@ class Brc(generic.TemplateView):
         context[
             'keywords'] = 'basic rider course, basic rider course near me, motorcycle basic rider course near me, msf basic rider course'
         context['title'] = 'Basic Rider Course'
+        context['price'] = self.get_price()
 
         return context
+
+    @staticmethod
+    def get_price():
+        try:
+            result = models.Price.objects.get(class_type='brc')
+        except models.Price.DoesNotExist:
+            raise Http404('Class Type does not exist')
+
+        return {
+            'amount': str(result.amount),
+            're_amount': str(result.re_amount)
+        }
 
 
 class Index(generic.TemplateView):
@@ -101,8 +127,20 @@ class Kickstart(generic.TemplateView):
         context['description'] = 'Remedial Motorcycle Training'
         context['keywords'] = 'remedial motorcycle training, motorcycle, training, remedial'
         context['title'] = 'Remedial Motorcycle Training'
+        context['price'] = self.get_price()
 
         return context
+
+    @staticmethod
+    def get_price():
+        try:
+            result = models.Price.objects.get(class_type='ime')
+        except models.Price.DoesNotExist:
+            raise Http404('Class Type does not exist')
+
+        return {
+            'amount': str(result.amount)
+        }
 
 
 class Private(generic.TemplateView):
@@ -117,8 +155,20 @@ class Private(generic.TemplateView):
         context['description'] = 'Private Motorcycle Lessons'
         context['keywords'] = 'private motorcycle class, private class, private'
         context['title'] = 'Private Motorcycle Lessons'
+        context['price'] = self.get_price()
 
         return context
+
+    @staticmethod
+    def get_price():
+        try:
+            result = models.Price.objects.get(class_type='private')
+        except models.Price.DoesNotExist:
+            raise Http404('Class Type does not exist')
+
+        return {
+            'amount': str(result.amount)
+        }
 
 
 class Src(generic.TemplateView):
@@ -134,5 +184,18 @@ class Src(generic.TemplateView):
         context[
             'keywords'] = 'skilled, skilled rider course, experienced rider course, motorcycle advanced rider training, msf experienced rider course'
         context['title'] = 'Skilled Rider Course'
+        context['price'] = self.get_price()
 
         return context
+
+    @staticmethod
+    def get_price():
+        try:
+            result = models.Price.objects.get(class_type='src')
+        except models.Price.DoesNotExist:
+            raise Http404('Class Type does not exist')
+
+        return {
+            'amount': str(result.amount),
+            're_amount': str(result.re_amount)
+        }

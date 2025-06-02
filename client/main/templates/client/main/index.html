@@ -4,6 +4,29 @@
 
 {% load get_brp_url %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Pensacola",
+            "addressRegion": "FL",
+            "postalCode": "32505",
+            "streetAddress": "6385 Pensacola Blvd"
+          },
+          "description": "Learn to ride or improve your motorcycle skills.",
+          "name": "Biker Training LLC",
+          "openingHours": [
+            "Su-Sa 09:00-19:00"
+          ],
+          "telephone": "850-456-2277",
+          "url": "https://bikertraining.com"
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <h1 class="fs-4 fw-bold text-center mx-auto my-5 mb-3">
         LEARN TO RIDE OR IMPROVE YOUR MOTORCYCLE SKILLS

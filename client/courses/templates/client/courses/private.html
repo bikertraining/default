@@ -2,6 +2,23 @@
 
 {% load get_business_phone %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "description": "Private instruction is available for riders of all skill levels from beginners to advanced.",
+          "name": "Private Lessons",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "price": "{{ price.amount }}",
+            "priceCurrency": "USD"
+          }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="card mt-3">
         <div class="card-header bg-dark fs-4 text-white">

@@ -2,6 +2,23 @@
 
 {% load get_business_phone %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "description": "The KickStart Course is for students that have not reached a level of comfort that will enable them to continue with the course.",
+          "name": "Kickstart RiderCourse (IME)",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "price": "{{ price.amount }}",
+            "priceCurrency": "USD"
+          }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="card mt-3">
         <div class="card-header bg-dark fs-4 text-white">

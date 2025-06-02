@@ -28,6 +28,23 @@
 
 {% load get_form_textarea %}
 
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "description": "Register and learn to ride a motorcycle.",
+          "name": "{{ defaults.get_class_type_display }}",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "price": "{{ defaults.amount }}",
+            "priceCurrency": "USD"
+          }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">

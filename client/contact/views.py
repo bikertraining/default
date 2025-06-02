@@ -26,12 +26,22 @@ class ContactForm(forms.Form):
     @staticmethod
     def send_email_check(cleaned_data: dict):
         blocked_items = [
+            '.com',
+            '.net',
+            '.org',
+            '@',
+            '+',
+            'companies',
+            'design',
+            'developer',
             'http',
             'https',
             'mailto',
-            '@',
+            'muh',
+            'seo',
+            'video',
+            'whatsapp',
             'www',
-            'muh'
         ]
 
         for blocked_item in blocked_items:
