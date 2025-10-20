@@ -1,6 +1,3 @@
-import json
-
-import requests
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -42,6 +39,8 @@ class PaymentForm(forms.Form):
     email = forms.CharField(required=True)
 
     first_name = forms.CharField(required=True)
+
+    ipaddress = forms.CharField(required=False)
 
     last_name = forms.CharField(required=True)
 
@@ -125,16 +124,6 @@ class PaymentForm(forms.Form):
             # Send Email
             self.send_email_charged(result_price)
 
-    @staticmethod
-    def get_ip():
-        response = requests.get(
-            'https://api.ipify.org/?format=json'
-        )
-
-        result = json.loads(response.content)
-
-        return result['ip']
-
     def send_email_declined(self, result: models.Price):
         # Compose HTML Message
         html_message_fraud = loader.render_to_string(
@@ -150,7 +139,7 @@ class PaymentForm(forms.Form):
                                       f"CVV {self.cleaned_data['credit_card_cvv2']}",
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
-                'ipaddress': self.get_ip(),
+                'ipaddress': self.cleaned_data['ipaddress'],
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'state': self.cleaned_data['state'],
@@ -189,7 +178,7 @@ class PaymentForm(forms.Form):
                 'credit_card_number': alter_credit_card_number,
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
-                'ipaddress': self.get_ip(),
+                'ipaddress': self.cleaned_data['ipaddress'],
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'state': self.cleaned_data['state'],

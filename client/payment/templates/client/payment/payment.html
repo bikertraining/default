@@ -28,6 +28,16 @@
 
 {% load strip_tag %}
 
+{% block javascript %}
+    <script type="application/javascript">
+        function getIP(json) {
+            document.getElementById('ipaddress').value = json.ip;
+        }
+    </script>
+
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
@@ -61,6 +71,8 @@
                 {% csrf_token %}
 
                 {% get_form_hidden name='class_type' value=defaults.class_type|default:'' %}
+
+                {% get_form_hidden name='ipaddress' value=form.ipaddress.value %}
 
                 <h2 class="fs-4 mb-3">
                     <i class="bi bi-person-plus-fill"></i>

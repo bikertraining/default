@@ -49,6 +49,16 @@
     </script>
 {% endblock %}
 
+{% block javascript %}
+    <script type="application/javascript">
+        function getIP(json) {
+            document.getElementById('ipaddress').value = json.ip;
+        }
+    </script>
+
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
@@ -143,6 +153,8 @@
 
                 {% get_form_hidden name='class_type' value=defaults.class_type|default:'' %}
 
+                {% get_form_hidden name='ipaddress' value=form.ipaddress.value %}
+
                 {% get_form_hidden name='schedule' value=defaults.schedule|default:'' %}
 
                 <h2 class="fs-4 mt-3 mb-3">
@@ -209,7 +221,9 @@
                         Payment
                     </h2>
 
-                    <div class="mb-3">Please ensure this information is shown exactly how it is on your card statement from your issuing bank.</div>
+                    <div class="mb-3">Please ensure this information is shown exactly how it is on your card statement
+                        from your issuing bank.
+                    </div>
 
                     <div class="col-md-6">
                         {% get_form_text label='First Name' name='credit_card_first_name' required=True help_text='First name as displayed on card' error_text=form.credit_card_first_name.errors value=form.credit_card_first_name.value|default:'' %}

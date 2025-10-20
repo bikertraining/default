@@ -1,6 +1,3 @@
-import json
-
-import requests
 from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -20,6 +17,8 @@ class TeamForm(forms.Form):
 
     contact = forms.CharField(required=True)
 
+    ipaddress = forms.CharField(required=False)
+
     message1 = forms.CharField(required=True)
 
     message2 = forms.CharField(required=True)
@@ -37,16 +36,6 @@ class TeamForm(forms.Form):
     name = forms.CharField(required=True)
 
     phone = forms.CharField(required=True)
-
-    @staticmethod
-    def get_ip():
-        response = requests.get(
-            'https://api.ipify.org/?format=json'
-        )
-
-        result = json.loads(response.content)
-
-        return result['ip']
 
     @staticmethod
     def send_email_check(email='', message1='', message2='', message3='', message4='', message5='', message6='',
@@ -81,7 +70,7 @@ class TeamForm(forms.Form):
                 'client/team/email/join.html',
                 {
                     'email': self.cleaned_data['contact'],
-                    'ipaddress': self.get_ip(),
+                    'ipaddress': self.cleaned_data['ipaddress'],
                     'message1': self.cleaned_data['message1'],
                     'message2': self.cleaned_data['message2'],
                     'message3': self.cleaned_data['message3'],

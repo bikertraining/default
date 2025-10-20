@@ -10,11 +10,23 @@
 
 {% load get_business_phone %}
 
+{% load get_form_hidden %}
+
 {% load get_form_text %}
 
 {% load get_form_textarea %}
 
 {% load honeypot %}
+
+{% block javascript %}
+    <script type="application/javascript">
+        function getIP(json) {
+            document.getElementById('ipaddress').value = json.ip;
+        }
+    </script>
+
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}
 
 {% block content %}
     <h1 class="fs-4 mt-3">
@@ -56,6 +68,8 @@
         {% csrf_token %}
 
         {% render_honeypot_field 'email' %}
+
+        {% get_form_hidden name='ipaddress' value=form.ipaddress.value %}
 
         <div class="row d-inline-flex">
             <div class="col-md-6">

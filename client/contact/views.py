@@ -1,6 +1,3 @@
-import json
-
-import requests
 from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -9,6 +6,7 @@ from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views import generic
 from honeypot.decorators import check_honeypot
+
 
 class ContactForm(forms.Form):
     """
@@ -19,21 +17,13 @@ class ContactForm(forms.Form):
 
     contact = forms.CharField(required=True)
 
+    ipaddress = forms.CharField(required=False)
+
     message = forms.CharField(required=True)
 
     name = forms.CharField(required=True)
 
     phone = forms.CharField(required=False)
-
-    @staticmethod
-    def get_ip():
-        response = requests.get(
-            'https://api.ipify.org/?format=json'
-        )
-
-        result = json.loads(response.content)
-
-        return result['ip']
 
     @staticmethod
     def send_email_check(cleaned_data: dict):
@@ -84,7 +74,7 @@ class ContactForm(forms.Form):
                 'client/contact/email/contact.html',
                 {
                     'email': self.cleaned_data['contact'],
-                    'ipaddress': self.get_ip(),
+                    'ipaddress': self.cleaned_data['ipaddress'],
                     'message': self.cleaned_data['message'],
                     'name': self.cleaned_data['name'],
                     'phone': self.cleaned_data['phone'] if self.cleaned_data['phone'] is not None else ''
