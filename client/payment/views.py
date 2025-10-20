@@ -1,3 +1,6 @@
+import json
+
+import requests
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -8,7 +11,7 @@ from django.template import loader
 from django.views import generic
 
 from client.payment import models
-from util.merchant import eprocessing
+from util.merchant import authorizenet, eprocessing
 
 
 class PaymentForm(forms.Form):
@@ -42,9 +45,13 @@ class PaymentForm(forms.Form):
 
     last_name = forms.CharField(required=True)
 
+    policy = forms.BooleanField(required=True, widget=forms.CheckboxInput)
+
     phone = forms.CharField(required=True)
 
     state = forms.CharField(required=True, widget=forms.Select)
+
+    suffix = forms.ChoiceField(required=False, widget=forms.Select, choices=models.Register.Suffix)
 
     zipcode = forms.CharField(required=True)
 
@@ -90,8 +97,15 @@ class PaymentForm(forms.Form):
 
         # Charge Credit Card
         if result_price.is_active:
+            # Authorize.Net Merchant
+            if settings.MERCHANT_ID == 'authorizenet':
+                payment = authorizenet.AuthorizeNet(self.cleaned_data).payment()
             # eProcessing Merchant
-            payment = eprocessing.Eprocessing(self.cleaned_data).payment()
+            elif settings.MERCHANT_ID == 'epn':
+                payment = eprocessing.Eprocessing(self.cleaned_data).payment()
+            else:
+                # No available merchant
+                raise ValidationError('No available merchant.', code='error')
 
             # Charge Declined
             if payment['error']:
@@ -111,6 +125,16 @@ class PaymentForm(forms.Form):
             # Send Email
             self.send_email_charged(result_price)
 
+    @staticmethod
+    def get_ip():
+        response = requests.get(
+            'https://api.ipify.org/?format=json'
+        )
+
+        result = json.loads(response.content)
+
+        return result['ip']
+
     def send_email_declined(self, result: models.Price):
         # Compose HTML Message
         html_message_fraud = loader.render_to_string(
@@ -126,9 +150,11 @@ class PaymentForm(forms.Form):
                                       f"CVV {self.cleaned_data['credit_card_cvv2']}",
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
+                'ipaddress': self.get_ip(),
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'state': self.cleaned_data['state'],
+                'suffix': self.cleaned_data['suffix'] if self.cleaned_data.get('suffix') is not None else '',
                 'zipcode': self.cleaned_data['zipcode']
             }
         )
@@ -163,9 +189,11 @@ class PaymentForm(forms.Form):
                 'credit_card_number': alter_credit_card_number,
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
+                'ipaddress': self.get_ip(),
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'state': self.cleaned_data['state'],
+                'suffix': self.cleaned_data['suffix'] if self.cleaned_data.get('suffix') is not None else '',
                 'zipcode': self.cleaned_data['zipcode']
             }
         )

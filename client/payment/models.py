@@ -21,6 +21,16 @@ class Price(models.Price):
         verbose_name_plural = 'Client Prices'
 
 
+class Register(models.Register):
+    class Meta:
+        default_permissions = ()
+
+        proxy = True
+
+        verbose_name = 'Client Register'
+        verbose_name_plural = 'Client Register'
+
+
 class Schedule(models.Schedule):
     class Meta:
         default_permissions = ()

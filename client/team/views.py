@@ -1,3 +1,6 @@
+import json
+
+import requests
 from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -36,6 +39,16 @@ class TeamForm(forms.Form):
     phone = forms.CharField(required=True)
 
     @staticmethod
+    def get_ip():
+        response = requests.get(
+            'https://api.ipify.org/?format=json'
+        )
+
+        result = json.loads(response.content)
+
+        return result['ip']
+
+    @staticmethod
     def send_email_check(email='', message1='', message2='', message3='', message4='', message5='', message6='',
                          message7=''):
         if 'http' in message1 or 'https' in message1 or 'mailto' in message1 or '@' in message1:
@@ -68,6 +81,7 @@ class TeamForm(forms.Form):
                 'client/team/email/join.html',
                 {
                     'email': self.cleaned_data['contact'],
+                    'ipaddress': self.get_ip(),
                     'message1': self.cleaned_data['message1'],
                     'message2': self.cleaned_data['message2'],
                     'message3': self.cleaned_data['message3'],
@@ -82,7 +96,7 @@ class TeamForm(forms.Form):
 
             # Email Managers
             msg = EmailMessage(
-                'New submission from Contact Us',
+                'New submission from Join Our Team',
                 html_message,
                 settings.DEFAULT_FROM_EMAIL,
                 settings.MANAGERS,

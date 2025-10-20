@@ -2,6 +2,7 @@ import json
 
 import requests
 from django.conf import settings
+from django.utils.html import strip_tags
 
 
 class Eprocessing(object):
@@ -16,11 +17,12 @@ class Eprocessing(object):
         """
 
         request = {
-            "ePNAccount": settings.MERCHANT_LOGIN_ID_TEST if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN_ID_LIVE,
-            "RestrictKey": settings.MERCHANT_TRANSACTION_KEY_TEST if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY_LIVE,
+            "ePNAccount": settings.MERCHANT_LOGIN['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN['epn']['live'],
+            "RestrictKey": settings.MERCHANT_TRANSACTION_KEY['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['epn']['live'],
             "RequestType": "transaction",
             "TranType": "Sale",
             "Total": f"{self.data['amount']}",
+            "IndustryType": "E",
             "Address": self.data['address'],
             "Zip": self.data['zipcode'],
             "CardNo": self.data['credit_card_number'],
@@ -61,6 +63,9 @@ class Eprocessing(object):
             if result['Success'].lower() != 'y':
                 if result.get('RespText') is not None:
                     message = result['RespText']
+
+                    if result.get('AVSText') is not None:
+                        message += f" - {result['AVSText']}"
                 elif result.get('AVSText') is not None:
                     message = result['AVSText']
                 elif result.get('CVV2Text') is not None:
@@ -70,7 +75,7 @@ class Eprocessing(object):
 
                 return {
                     'error': True,
-                    'message': message
+                    'message': strip_tags(message)
                 }
 
             # Transaction OK
@@ -98,11 +103,12 @@ class Eprocessing(object):
         """
 
         request = {
-            "ePNAccount": settings.MERCHANT_LOGIN_ID_TEST if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN_ID_LIVE,
-            "RestrictKey": settings.MERCHANT_TRANSACTION_KEY_TEST if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY_LIVE,
+            "ePNAccount": settings.MERCHANT_LOGIN['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN['epn']['live'],
+            "RestrictKey": settings.MERCHANT_TRANSACTION_KEY['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['epn']['live'],
             "RequestType": "transaction",
             "TranType": "Sale",
             "Total": f"{self.data['amount']}",
+            "IndustryType": "E",
             "Address": self.data['address'],
             "Zip": self.data['zipcode'],
             "CardNo": self.data['credit_card_number'],

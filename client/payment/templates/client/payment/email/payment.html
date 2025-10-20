@@ -26,7 +26,8 @@
     </tr>
 
     <tr style="background-color: #FFFFFF;">
-        <td style="text-align: left; padding: 8px;">{{ first_name }} {{ last_name }}</td>
+        <td style="text-align: left; padding: 8px;">{{ first_name }} {{ last_name }}
+            {% if suffix != '' %}{{ suffix }}{% endif %}</td>
     </tr>
 
     <tr style="background-color: #DDDDDD; color: #000000;">
@@ -63,6 +64,24 @@
         <td style="text-align: left; padding: 8px;">
             {{ credit_card_number }} {% if coupon_code != '' %}with Coupon Code: {{ coupon_code }}{% endif %}
         </td>
+    </tr>
+
+    <tr style="background-color: #DDDDDD; color: #000000;">
+        <td style="text-align: left; padding: 8px; font-weight: bold;">I HAVE READ, UNDERSTAND, AND ACCEPT THE REFUND /
+            CANCELLATION POLICY
+        </td>
+    </tr>
+
+    <tr style="background-color: #FFFFFF;">
+        <td style="text-align: left; padding: 8px;">YES</td>
+    </tr>
+
+    <tr style="background-color: #DDDDDD; color: #000000;">
+        <td style="text-align: left; padding: 8px; font-weight: bold;">IP Address</td>
+    </tr>
+
+    <tr style="background-color: #FFFFFF;">
+        <td style="text-align: left; padding: 8px;">{{ ipaddress }}</td>
     </tr>
     </tbody>
 </table>

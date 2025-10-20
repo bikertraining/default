@@ -1,8 +1,8 @@
 # Django Modules
-django==5.1.7
-django-cors-headers==4.7.0
+django==5.2.7
+django-cors-headers==4.9.0
 django-honeypot==1.2.1
 
 # Other Modules
 gunicorn==23.0.0
-requests==2.32.3
+requests==2.32.5

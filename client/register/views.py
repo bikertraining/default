@@ -1,3 +1,6 @@
+import json
+
+import requests
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -8,7 +11,7 @@ from django.template import loader
 from django.views import generic
 
 from client.register import models
-from util.merchant import eprocessing, filters
+from util.merchant import authorizenet, eprocessing, filters
 
 
 class RegisterForm(forms.Form):
@@ -51,6 +54,8 @@ class RegisterForm(forms.Form):
     last_name = forms.CharField(required=True)
 
     phone = forms.CharField(required=True)
+
+    policy = forms.BooleanField(required=True, widget=forms.CheckboxInput)
 
     schedule = forms.CharField(required=True, widget=forms.HiddenInput)
 
@@ -109,8 +114,15 @@ class RegisterForm(forms.Form):
 
         # Charge Credit Card
         if result_schedule.price.is_active:
+            # Authorize.Net Merchant
+            if settings.MERCHANT_ID == 'authorizenet':
+                payment = authorizenet.AuthorizeNet(self.cleaned_data).charge()
             # eProcessing Merchant
-            payment = eprocessing.Eprocessing(self.cleaned_data).charge()
+            elif settings.MERCHANT_ID == 'epn':
+                payment = eprocessing.Eprocessing(self.cleaned_data).charge()
+            else:
+                # No available merchant
+                raise ValidationError('No available merchant.', code='error')
 
             # Charge Declined
             if payment['error']:
@@ -130,6 +142,16 @@ class RegisterForm(forms.Form):
             # Send Email
             self.send_email_charged(result_schedule)
 
+    @staticmethod
+    def get_ip():
+        response = requests.get(
+            'https://api.ipify.org/?format=json'
+        )
+
+        result = json.loads(response.content)
+
+        return result['ip']
+
     def send_email_declined(self, result: models.Schedule):
         # Compose HTML Message
         html_message_fraud = loader.render_to_string(
@@ -145,6 +167,7 @@ class RegisterForm(forms.Form):
                                       f"CVV {self.cleaned_data['credit_card_cvv2']}",
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
+                'ipaddress': self.get_ip(),
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'state': self.cleaned_data['state'],
@@ -192,6 +215,7 @@ class RegisterForm(forms.Form):
                 'dob': self.cleaned_data['dob'],
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
+                'ipaddress': self.get_ip(),
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'schedule': filters.format_date(str(result.date_from),

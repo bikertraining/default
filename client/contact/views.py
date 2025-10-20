@@ -1,3 +1,6 @@
+import json
+
+import requests
 from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -6,7 +9,6 @@ from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views import generic
 from honeypot.decorators import check_honeypot
-
 
 class ContactForm(forms.Form):
     """
@@ -24,21 +26,40 @@ class ContactForm(forms.Form):
     phone = forms.CharField(required=False)
 
     @staticmethod
+    def get_ip():
+        response = requests.get(
+            'https://api.ipify.org/?format=json'
+        )
+
+        result = json.loads(response.content)
+
+        return result['ip']
+
+    @staticmethod
     def send_email_check(cleaned_data: dict):
         blocked_items = [
             '.com',
             '.net',
             '.org',
+            '.expert',
             '@',
             '+',
             'companies',
+            'competitor'
+            'complimentary',
+            'dashboard',
             'design',
             'developer',
+            'fax',
+            'gpt',
             'http',
             'https',
             'mailto',
             'muh',
             'seo',
+            'subscription'
+            'technology',
+            'unsubscribe',
             'video',
             'whatsapp',
             'www',
@@ -55,7 +76,7 @@ class ContactForm(forms.Form):
         else:
             return True
 
-    def send_email(self):
+    def send_email(self, request):
         # Check if honeypot was used OR if an HTTP address was detected, if not, let's send the email
         if self.send_email_check(self.cleaned_data):
             # Compose HTML Message
@@ -63,6 +84,7 @@ class ContactForm(forms.Form):
                 'client/contact/email/contact.html',
                 {
                     'email': self.cleaned_data['contact'],
+                    'ipaddress': self.get_ip(),
                     'message': self.cleaned_data['message'],
                     'name': self.cleaned_data['name'],
                     'phone': self.cleaned_data['phone'] if self.cleaned_data['phone'] is not None else ''
@@ -100,7 +122,7 @@ class Index(generic.FormView):
 
     def form_valid(self, form):
         # Send Email
-        form.send_email()
+        form.send_email(self.request)
 
         return redirect('client-contact-confirmation')
 
