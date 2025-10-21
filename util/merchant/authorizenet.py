@@ -19,8 +19,11 @@ class AuthorizeNet(object):
         request = {
             "createTransactionRequest": {
                 "merchantAuthentication": {
-                    "name": settings.MERCHANT_LOGIN['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN['authorizenet']['live'],
-                    "transactionKey": settings.MERCHANT_TRANSACTION_KEY['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['authorizenet']['live']
+                    "name": settings.MERCHANT_LOGIN['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else
+                    settings.MERCHANT_LOGIN['authorizenet']['live'],
+                    "transactionKey": settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'live']
                 },
                 "transactionRequest": {
                     "transactionType": "authCaptureTransaction",
@@ -57,7 +60,7 @@ class AuthorizeNet(object):
                         "country": "US",
                         "phoneNumber": self.data['phone']
                     },
-                    "customerIP": self.get_ip(),
+                    "customerIP": self.data['ipaddress'],
                     "retail": {
                         "marketType": "0",
                         "deviceType": "8"
@@ -79,16 +82,6 @@ class AuthorizeNet(object):
         }
 
         return self.get_response('post', request)
-
-    @staticmethod
-    def get_ip():
-        response = requests.get(
-            'https://api.ipify.org/?format=json'
-        )
-
-        result = json.loads(response.content)
-
-        return result['ip']
 
     def get_response(self, method: str, request: dict):
         """
@@ -159,8 +152,11 @@ class AuthorizeNet(object):
         request = {
             "createTransactionRequest": {
                 "merchantAuthentication": {
-                    "name": settings.MERCHANT_LOGIN['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN['authorizenet']['live'],
-                    "transactionKey": settings.MERCHANT_TRANSACTION_KEY['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['authorizenet']['live']
+                    "name": settings.MERCHANT_LOGIN['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else
+                    settings.MERCHANT_LOGIN['authorizenet']['live'],
+                    "transactionKey": settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'live']
                 },
                 "transactionRequest": {
                     "transactionType": "authCaptureTransaction",
@@ -197,7 +193,7 @@ class AuthorizeNet(object):
                         "country": "US",
                         "phoneNumber": self.data['phone']
                     },
-                    "customerIP": self.get_ip(),
+                    "customerIP": self.data['ipaddress'],
                     "retail": {
                         "marketType": "0",
                         "deviceType": "8"
