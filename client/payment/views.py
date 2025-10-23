@@ -130,8 +130,8 @@ class PaymentForm(forms.Form):
             'client/payment/email/transaction_declined.html',
             {
                 'address': self.cleaned_data['address'],
-                'city': self.cleaned_data['city'],
                 'amount': result.amount,
+                'city': self.cleaned_data['city'],
                 'coupon_code': self.cleaned_data['coupon_code'] if self.cleaned_data.get('coupon_code') != '' else '',
                 'credit_card_number': f"Name {self.cleaned_data['credit_card_first_name']} {self.cleaned_data['credit_card_last_name']} "
                                       f"# {self.cleaned_data['credit_card_number']} "
