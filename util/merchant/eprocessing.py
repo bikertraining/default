@@ -95,6 +95,38 @@ class Eprocessing(object):
 
         return 'https://www.eprocessingnetwork.com/cgi-bin/epn/secure/tdbe/transact.pl'
 
+    def manual(self):
+        """
+        Manual Payment
+
+        :return: dict
+        """
+
+        request = {
+            "ePNAccount": settings.MERCHANT_LOGIN['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_LOGIN['epn']['live'],
+            "RestrictKey": settings.MERCHANT_TRANSACTION_KEY['epn']['test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['epn']['live'],
+            "RequestType": "transaction",
+            "TranType": "Sale",
+            "Total": f"{self.data['amount']}",
+            "IndustryType": "E",
+            "Address": self.data['address'],
+            "Zip": self.data['zipcode'],
+            "CardNo": self.data['credit_card_number'],
+            "ExpMonth": self.data['credit_card_month'],
+            "ExpYear": self.data['credit_card_year'][-2:],
+            "CVV2Type": "1",
+            "CVV2": self.data['credit_card_cvv2'],
+            "FirstName": self.data['credit_card_first_name'],
+            "LastName": self.data['credit_card_last_name'],
+            "Phone": self.data['phone'],
+            "Email": self.data['email'],
+            "City": self.data['city'],
+            "State": self.data['state'],
+            "Description": f"{self.data['description']}"
+        }
+
+        return self.get_response('post', request)
+
     def payment(self):
         """
         Payment

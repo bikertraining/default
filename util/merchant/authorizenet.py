@@ -142,6 +142,80 @@ class AuthorizeNet(object):
         else:
             return 'https://api.authorize.net/xml/v1/request.api'
 
+    def manual(self):
+        """
+        Manual Payment
+
+        :return: dict
+        """
+
+        request = {
+            "createTransactionRequest": {
+                "merchantAuthentication": {
+                    "name": settings.MERCHANT_LOGIN['authorizenet']['test'] if settings.MERCHANT_TEST_MODE else
+                    settings.MERCHANT_LOGIN['authorizenet']['live'],
+                    "transactionKey": settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'test'] if settings.MERCHANT_TEST_MODE else settings.MERCHANT_TRANSACTION_KEY['authorizenet'][
+                        'live']
+                },
+                "transactionRequest": {
+                    "transactionType": "authCaptureTransaction",
+                    "amount": f"{self.data['amount']}",
+                    "currencyCode": "USD",
+                    "payment": {
+                        "creditCard": {
+                            "cardNumber": self.data['credit_card_number'],
+                            "expirationDate": f"{self.data['credit_card_year']}-{self.data['credit_card_month']}",
+                            "cardCode": self.data['credit_card_cvv2']
+                        }
+                    },
+                    "lineItems": {
+                        "lineItem": {
+                            "itemId": "1",
+                            "name": 'MANUAL',
+                            "description": f"{self.data['description']}",
+                            "quantity": "1",
+                            "unitPrice": f"{self.data['amount']}",
+                            "taxable": False
+                        }
+                    },
+                    "customer": {
+                        "type": "individual",
+                        "email": self.data['email']
+                    },
+                    "billTo": {
+                        "firstName": self.data['credit_card_first_name'],
+                        "lastName": self.data['credit_card_last_name'],
+                        "address": self.data['address'],
+                        "city": self.data['city'],
+                        "state": self.data['state'],
+                        "zip": self.data['zipcode'],
+                        "country": "US",
+                        "phoneNumber": self.data['phone']
+                    },
+                    "customerIP": self.data['ipaddress'],
+                    "retail": {
+                        "marketType": "0",
+                        "deviceType": "8"
+                    },
+                    "transactionSettings": {
+                        "setting": [
+                            {
+                                "settingName": "duplicateWindow",
+                                "settingValue": "0"
+                            },
+                            {
+                                "settingName": "emailCustomer",
+                                "settingValue": True
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+
+        return self.get_response('post', request)
+
     def payment(self):
         """
         Payment
@@ -166,7 +240,7 @@ class AuthorizeNet(object):
                         "creditCard": {
                             "cardNumber": self.data['credit_card_number'],
                             "expirationDate": f"{self.data['credit_card_year']}-{self.data['credit_card_month']}",
-                            "cardCode": self.data['credit_card_cvv2'],
+                            "cardCode": self.data['credit_card_cvv2']
                         }
                     },
                     "lineItems": {
