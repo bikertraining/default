@@ -1,0 +1,129 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock %}
+
+{% load get_form_hidden %}
+
+{% load get_form_select %}
+
+{% load get_form_select_month %}
+
+{% load get_form_select_state %}
+
+{% load get_form_select_year %}
+
+{% load get_form_text %}
+
+{% load get_form_textarea %}
+
+{% load strip_tag %}
+
+{% block javascript %}
+    <script type="application/javascript">
+        function getIP(json) {
+            document.getElementById('ipaddress').value = json.ip;
+        }
+    </script>
+
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 mb-3 mt-3">
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    There was a problem processing your payment. Your bank returned the following error:
+                </div>
+
+                <div class="text-danger my-3 fs-5 rounded-3 border border-2 border-danger">
+                    <span class="mx-2">{% strip_tag error first=2 last=2 %}</span>
+                </div>
+            {% endfor %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% get_form_hidden name='ipaddress' value=form.ipaddress.value %}
+
+                <div class="row">
+                    <h2 class="fs-4 mb-3">
+                        <i class="bi bi-credit-card"></i>
+                        Payment
+                    </h2>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='First Name' name='credit_card_first_name' required=True help_text='First name as displayed on card' error_text=form.credit_card_first_name.errors value=form.credit_card_first_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Last Name' name='credit_card_last_name' required=True help_text='Last name as displayed on card' error_text=form.credit_card_last_name.errors value=form.credit_card_last_name.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Email' name='email' inputtype='email' required=True help_text='Where the receipt will be sent to' error_text=form.email.errors value=form.email.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Phone Number' name='phone' inputtype='tel' required=True help_text='Phone number' error_text=form.phone.errors value=form.phone.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-12">
+                        {% get_form_text label='Address' name='address' required=True help_text='As shown on your card statement' error_text=form.address.errors value=form.address.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-5">
+                        {% get_form_text label='City' name='city' required=True help_text='As shown on your card statement' error_text=form.city.errors value=form.city.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        {% get_form_select_state label='State' name='state' required=True help_text='As shown on your card statement' error_text=form.state.errors value=form.state.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-3">
+                        {% get_form_text label='Zipcode' name='zipcode' inputtype='tel' required=True help_text='As shown on your card statement' maxlength='28' error_text=form.zipcode.errors value=form.zipcode.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='Credit Card Number' name='credit_card_number' inputtype='tel' required=True maxlength='16' is_cc=True error_text=form.credit_card_number.errors value=form.credit_card_number.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_text label='CVV' name='credit_card_cvv2' inputtype='tel' required=True maxlength='4' error_text=form.credit_card_cvv2.errors value=form.credit_card_cvv2.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {% get_form_select_month label='Expiration Month' name='credit_card_month' required=True error_text=form.credit_card_month.errors value=form.credit_card_month.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-6">
+                        {% get_form_select_year label='Expiration Year' name='credit_card_year' required=True error_text=form.credit_card_year.errors value=form.credit_card_year.value|default:'' %}
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        {% get_form_text label='Amount to Charge' name='amount' required=True help_text='Format should be 0.00' error_text=form.amount.errors value=form.amount.value|default:'' %}
+                    </div>
+
+                    <div class="col-md-9">
+                        {% get_form_textarea label='Description of Charge' name='description' required=True rows='3' help_text='Short description of why we are manually charging' error_text=form.description.errors value=form.description.value|default:'' %}
+                    </div>
+                </div>
+
+                <button class="w-100 btn btn-success btn-lg"
+                        onclick="document.getElementById('loading').style.display = 'block'"
+                        type="submit">
+                    <i class="bi bi-file-lock2-fill"></i>
+                    Pay Now
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
