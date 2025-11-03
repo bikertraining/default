@@ -209,7 +209,7 @@
                     </div>
 
                     <div class="col-md-12 mt-3">
-                        {% get_form_textarea label='Comments' name='comment' required=False rows='3' help_text='Anything we should be aware of?' error_text=form.comment.errors value=form.comment.value|default:'' %}
+                        {% get_form_textarea label='Comments' name='comment' required=False rows='3' maxlength='3000' help_text='Anything we should be aware of?' error_text=form.comment.errors value=form.comment.value|default:'' %}
                     </div>
                 </div>
 

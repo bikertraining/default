@@ -27,7 +27,20 @@ class ContactForm(forms.Form):
 
     @staticmethod
     def send_email_check(cleaned_data: dict):
+        # Contact Items
+        blocked_contact = [
+            'bestaitools.my',
+            'monkeydigital.co',
+        ]
+
+        for blocked_item in blocked_contact:
+            # Contact
+            if blocked_item in cleaned_data['contact'].lower():
+                return False
+
+        # Message and Name Items
         blocked_items = [
+            '.capital',
             '.com',
             '.net',
             '.org',
@@ -45,6 +58,7 @@ class ContactForm(forms.Form):
             'http',
             'https',
             'mailto',
+            'merchant',
             'muh',
             'seo',
             'subscription'
@@ -56,8 +70,11 @@ class ContactForm(forms.Form):
         ]
 
         for blocked_item in blocked_items:
+            # Message
             if blocked_item in cleaned_data['message'].lower():
                 return False
+
+            # Name
             elif blocked_item in cleaned_data['name'].lower():
                 return False
 

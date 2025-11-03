@@ -114,6 +114,22 @@ class AuthorizeNet(object):
             elif result['responseCode'] == '2' or result['responseCode'] == '3':
                 if result.get('errors') is not None:
                     message = result['errors'][0]['errorText']
+
+                    # AVS Codes
+                    if result.get('avsResultCode') == 'S':
+                        message += ' The card issuing bank does not support AVS.'
+                    elif result.get('avsResultCode') == 'N':
+                        message += ' Address: No Match and ZIP Code: No Match.'
+                    elif result.get('avsResultCode') == 'A':
+                        message += ' Address: Match but ZIP Code: No Match.'
+                    elif result.get('avsResultCode') == 'Z':
+                        message += ' Address: No Match but ZIP Code: Match.'
+                    elif result.get('avsResultCode') == 'W':
+                        message += ' Address: No Match but ZIP Code: Matched 9 digits.'
+
+                    # CVV2 Codes
+                    if result.get('cvvResultCode') == 'N':
+                        message += ' CVV Does NOT Match.'
                 else:
                     message = 'Unknown error, please call and lets figure this out.'
 

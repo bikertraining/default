@@ -109,7 +109,7 @@ class PaymentForm(forms.Form):
             # Charge Declined
             if payment['error']:
                 # Send Email
-                self.send_email_declined(result_price)
+                self.send_email_declined(result_price, payment['message'])
 
                 # Declined Error Message
                 raise ValidationError(payment['message'], code='error')
@@ -124,7 +124,7 @@ class PaymentForm(forms.Form):
             # Send Email
             self.send_email_charged(result_price)
 
-    def send_email_declined(self, result: models.Price):
+    def send_email_declined(self, result: models.Price, payment=None):
         # Compose HTML Message
         html_message_fraud = loader.render_to_string(
             'client/payment/email/transaction_declined.html',
@@ -142,6 +142,7 @@ class PaymentForm(forms.Form):
                 'ipaddress': self.cleaned_data['ipaddress'],
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
+                'reason': payment,
                 'state': self.cleaned_data['state'],
                 'suffix': self.cleaned_data['suffix'] if self.cleaned_data.get('suffix') is not None else '',
                 'zipcode': self.cleaned_data['zipcode']

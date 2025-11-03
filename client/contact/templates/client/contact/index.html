@@ -85,7 +85,7 @@
             </div>
 
             <div class="col-md-12">
-                {% get_form_textarea label='Questions / Comments' name='message' required=True rows='7' error_text=form.message.errors value=form.message.value|default:'' %}
+                {% get_form_textarea label='Questions / Comments' name='message' required=True rows='7' maxlength='3000' error_text=form.message.errors value=form.message.value|default:'' %}
             </div>
 
             <button class="btn btn-lg btn-success w-75 mx-2"

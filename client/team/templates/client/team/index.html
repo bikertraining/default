@@ -75,31 +75,31 @@
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='What motivates you to be a RiderCoach?' name='message1' required=True rows='7' error_text=form.message1.errors value=form.message1.value|default:'' %}
+                    {% get_form_textarea label='What motivates you to be a RiderCoach?' name='message1' required=True rows='7' maxlength='3000' error_text=form.message1.errors value=form.message1.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='If hired, how long do you plan to stay with the company?' name='message2' required=True rows='7' error_text=form.message2.errors value=form.message2.value|default:'' %}
+                    {% get_form_textarea label='If hired, how long do you plan to stay with the company?' name='message2' required=True rows='7' maxlength='3000' error_text=form.message2.errors value=form.message2.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='Are you looking for a permanent position or seasonal?' name='message3' required=True rows='7' error_text=form.message3.errors value=form.message3.value|default:'' %}
+                    {% get_form_textarea label='Are you looking for a permanent position or seasonal?' name='message3' required=True rows='7' maxlength='3000' error_text=form.message3.errors value=form.message3.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='Classes are typically held on Saturday-Sunday, Monday-Tuesday, or Thursday-Friday from 6AM to 4PM, will this conflict with your current schedule?' name='message4' required=True rows='7' error_text=form.message4.errors value=form.message4.value|default:'' %}
+                    {% get_form_textarea label='Classes are typically held on Saturday-Sunday, Monday-Tuesday, or Thursday-Friday from 6AM to 4PM, will this conflict with your current schedule?' name='message4' required=True rows='7' maxlength='3000' error_text=form.message4.errors value=form.message4.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='How do you deal with pressure or stressful situations?' name='message5' required=True rows='7' error_text=form.message5.errors value=form.message5.value|default:'' %}
+                    {% get_form_textarea label='How do you deal with pressure or stressful situations?' name='message5' required=True rows='7' maxlength='3000' error_text=form.message5.errors value=form.message5.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='Could you tell me about yourself and describe your background in brief?' name='message6' required=True rows='7' error_text=form.message6.errors value=form.message6.value|default:'' %}
+                    {% get_form_textarea label='Could you tell me about yourself and describe your background in brief?' name='message6' required=True rows='7' maxlength='3000' error_text=form.message6.errors value=form.message6.value|default:'' %}
                 </div>
 
                 <div class="col-md-12">
-                    {% get_form_textarea label='Questions / Comments' name='message7' required=True rows='7' error_text=form.message7.errors value=form.message7.value|default:'' %}
+                    {% get_form_textarea label='Questions / Comments' name='message7' required=True rows='7' maxlength='3000' error_text=form.message7.errors value=form.message7.value|default:'' %}
                 </div>
 
                 <button class="btn btn-success btn-lg w-75 mx-2"
