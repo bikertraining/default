@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="col-md-6 mt-3">
-                        {% get_form_text label='Amount' name='amount' required=True error_text=form.amount.errors value=form.amount.value|default:'' %}
+                        {% get_form_text label='Amount' name='amount' required=True help_text="Amount to be discounted" error_text=form.amount.errors value=form.amount.value|default:'' %}
                     </div>
 
                     <div class="col-md-6 mt-3">

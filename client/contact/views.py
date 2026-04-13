@@ -15,9 +15,9 @@ class ContactForm(forms.Form):
 
     email = forms.CharField(required=False)
 
-    contact = forms.CharField(required=True)
+    contact = forms.EmailField(required=True)
 
-    ipaddress = forms.CharField(required=False)
+    ipaddress = forms.CharField(required=False, initial='None')
 
     message = forms.CharField(required=True)
 
@@ -27,10 +27,16 @@ class ContactForm(forms.Form):
 
     @staticmethod
     def send_email_check(cleaned_data: dict):
+        # IP Address
+        if cleaned_data['ipaddress'] == 'None':
+            return False
+
         # Contact Items
         blocked_contact = [
             'bestaitools.my',
+            'maxreviewflow.com',
             'monkeydigital.co',
+            'tacoblastmail.com',
         ]
 
         for blocked_item in blocked_contact:
@@ -60,6 +66,7 @@ class ContactForm(forms.Form):
             'mailto',
             'merchant',
             'muh',
+            'payroll',
             'seo',
             'subscription'
             'technology',
