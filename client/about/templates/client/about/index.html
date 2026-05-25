@@ -1,0 +1,38 @@
+{% extends "client/base.html" %}
+
+{% load get_gui_url %}
+
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Biker Training LLC",
+          "url": "{% get_gui_url %}{{ request.get_full_path }}",
+          "logo": "{% get_gui_url %}/static/img/bikertraining/logo_color_white.webp",
+          "description": "A motorcycle training organization dedicated to rider safety, education, and high‑quality instruction.",
+          "foundingDate": "2024",
+          "sameAs": [
+            "https://www.facebook.com/bikertraining",
+            "https://www.instagram.com/bikertraining"
+          ]
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero (Dark) -->
+    {% include 'client/about/hero.html' %}
+
+    <!-- OUR STORY -->
+    {% include 'client/about/story.html' %}
+
+    <!-- OUR VALUES (Dark) -->
+    {% include 'client/about/values.html' %}
+
+    <!-- OUR APPROACH -->
+    {% include 'client/about/approach.html' %}
+
+    <!-- STATS (Mixed Split) -->
+    {% include 'client/about/stats.html' %}
+{% endblock %}

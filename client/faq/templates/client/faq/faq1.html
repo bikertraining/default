@@ -1,0 +1,39 @@
+{% load get_business_phone %}
+
+{% block content %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq1"
+                    aria-expanded="true"
+                    aria-controls="faq1">
+                How do I register for the course?
+            </button>
+        </h2>
+
+        <div id="faq1"
+             class="accordion-collapse collapse show"
+             data-bs-parent="#accordionFaq">
+            <div class="accordion-body">
+                There are several ways to register for the course.
+
+                You can
+                <a href="{% url 'client-schedule-index' %}"
+                   class="text-decoration-none">
+                    register online
+                </a>
+
+                <span class="fw-bold">OR</span>
+
+                call us at
+
+                <a href="tel:{% get_business_phone True %}"
+                   class="text-decoration-none">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

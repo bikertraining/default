@@ -9,7 +9,7 @@ def get_form_select_month(label, name, error_text=None, help_text=None, required
     if error_text is None:
         error_text = {}
 
-    context = (f'<div class="SelectInput{" required" if required else ""}">'
+    context = (f'<div class="SelectInput{" required" if required else ""} mb-3">'
                f'<label class="fw-bold form-label" for={name}>{label}</label>'
                f'<select class="form-control{" is-invalid" if error_text else ""}" id="{name}" label="{label}" name="{name}">'
                f'<option value="">-- Select {label} --</option>'

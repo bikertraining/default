@@ -1,0 +1,55 @@
+{% load get_business_email %}
+
+{% load get_business_phone %}
+
+{% block content %}
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <h2 class="fw-bold fs-4">
+                        <i class="bi bi-map me-1"></i> Location
+                    </h2>
+
+                    <div>
+                        Biker Training LLC
+                    </div>
+
+                    <div>
+                        6385 Pensacola Blvd
+                    </div>
+
+                    <div>
+                        Pensacola, Florida, 32505
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h2 class="fw-bold fs-4">
+                        <i class="bi bi-telephone me-1"></i> Phone
+                    </h2>
+
+                    <div>
+                        <a href="tel:{% get_business_phone True %}"
+                           class="text-decoration-none text-dark">
+                            {% get_business_phone False %}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h2 class="fw-bold fs-4">
+                        <i class="bi bi-envelope-at me-1"></i> Email
+                    </h2>
+
+                    <div>
+                        <a href="mailto: {% get_business_email %}"
+                           class="text-decoration-none text-dark">
+                            {% get_business_email %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

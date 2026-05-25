@@ -1,0 +1,62 @@
+{% load get_form_hidden %}
+
+{% load get_form_text %}
+
+{% load get_form_textarea %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="p-4 shadow rounded bg-white">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% get_form_hidden name='ipaddress' value=form.ipaddress.value %}
+
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_text label='Email' name='email' required=True error_text=form.email.errors value=form.email.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_text label='Phone' name='phone' required=False error_text=form.phone.errors value=form.phone.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_textarea label='Questions / Comments' name='message' required=True rows='7' maxlength='3000' error_text=form.message.errors value=form.message.value|default:'' %}
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <button class="w-100 btn btn-primary btn-lg"
+                                        type="submit"
+                                        id="submit_button"
+                                        onclick="toggleButton()">
+                                    <i class="bi bi-check2-circle me-1"></i> Request Information
+                                </button>
+
+                                <button class="w-100 btn btn-primary btn-lg"
+                                        type="button"
+                                        id="submit_processing"
+                                        style="display: none;"
+                                        disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                    Processing, please wait...
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

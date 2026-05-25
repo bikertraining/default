@@ -70,12 +70,22 @@ class Register(models.Model):
         null=True
     )
 
+    dob_age = models.TextField(
+        blank=False,
+        null=True
+    )
+
     email = models.TextField(
         blank=False,
         null=True
     )
 
     first_name = models.TextField(
+        blank=False,
+        null=True
+    )
+
+    ipaddress = models.TextField(
         blank=False,
         null=True
     )

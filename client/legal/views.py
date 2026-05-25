@@ -10,8 +10,9 @@ class Privacy(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Privacy Policy'
-        context['keywords'] = 'privacy policy, privacy, policy'
+        context['description'] = ('Read the Biker Training Motorcycle Training Privacy Policy to understand how we '
+                                  'collect, use, and protect your information.')
+        context['keywords'] = 'privacy policy, data protection, user privacy, privacy, motorcycle training privacy'
         context['title'] = 'Privacy Policy'
 
         return context
@@ -26,8 +27,10 @@ class Tos(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Terms of Service'
-        context['keywords'] = 'tos, terms of service'
+        context['description'] = ('Review the Terms of Service for Biker Training LLC, including user '
+                                  'responsibilities, policies, and conditions for using our website and services.')
+        context['keywords'] = ('terms of service, biker training terms, motorcycle training terms, user agreement, '
+                               'service policies')
         context['title'] = 'Terms of Service'
 
         return context

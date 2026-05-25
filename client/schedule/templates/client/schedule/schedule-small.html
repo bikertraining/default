@@ -1,0 +1,181 @@
+{% load static %}
+
+{% load get_brp_url %}
+
+{% block content %}
+    {% if object_list|length > 0 %}
+        <section class="py-3 bg-light d-lg-none">
+            <div class="mx-1">
+                <div class="d-print-none fw-bold mt-2 mb-3">
+                    <i class="bi bi-exclamation-diamond me-1"></i> Select a class to register
+
+                    {% if class_type == '3wbrc' %}
+                        <div class="fw-bold mt-3 text-danger">
+                            You *must* bring your own 3-wheel motorcycle for training purposes and show proof of
+                            insurance.
+
+                            <div class="fw-normal mt-3 text-dark">
+                                <div>
+                                    <a href="{% get_brp_url %}"
+                                       target="_blank">
+                                        <img src="{% static '/img/brp/logo-150x37.webp' %}"
+                                             alt="Can-AM BRP"
+                                             width="150"
+                                             height="37"
+                                             class="img-fluid"/>
+                                    </a>
+                                </div>
+
+                                <div>
+                                    If you enroll in the Can-AM program, they will supply you with a training bike.
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if class_type == 'src' %}
+                        <div class="fw-bold mt-3 text-danger">
+                            You *must* bring your own motorcycle for training purposes and show proof of insurance.
+
+                            <div class="mt-3">
+                                You *must* have the motorcycle endorsement on your driver's license.
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="table-responsive shadow rounded">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-dark text-center">
+                        <tr>
+                            <th>
+                                Dates
+                            </th>
+
+                            <th>
+                                Days
+                            </th>
+
+                            <th>
+                                Course
+                            </th>
+
+                            <th>
+                                Seats Available
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                        {% for value in object_list %}
+                            <tr {% if value.seats > '0' %}onclick="location.href='{% url 'client-register-index' value.pk %}'"{% endif %}>
+                                <td class="fw-bold">
+                                    <div>
+                                        {% if value.date_from == value.date_to %}
+                                            {{ value.date_from|date:"M" }}
+                                            {{ value.date_from|date:"j" }}
+                                        {% elif value.date_from|date:"M" != value.date_to|date:"M" %}
+                                            {{ value.date_from|date:"M" }}
+                                            {{ value.date_from|date:"j" }} - {{ value.date_to|date:"M" }}
+                                            {{ value.date_to|date:"j" }}
+                                        {% else %}
+                                            {{ value.date_from|date:"M" }}
+                                            {{ value.date_from|date:"j" }} - {{ value.date_to|date:"j" }}
+                                        {% endif %}
+                                    </div>
+
+                                    {% if value.seats > '0' %}
+                                        <div class="badge rounded-pill btn-accent text-dark border border-dark d-print-none">
+                                            Enroll Now
+                                        </div>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    <div class="fw-bold">
+                                        {{ value.get_day_type_display }}
+                                    </div>
+
+                                    {% if value.price.class_type == 'brc' %}
+                                        <div>
+                                            7:00 AM - 4:00 PM
+                                        </div>
+                                    {% endif %}
+
+                                    {% if value.price.class_type == 'src' %}
+                                        <div>
+                                            12:00 PM (Noon) - 5:30 PM
+                                        </div>
+                                    {% endif %}
+
+                                    {% if value.price.class_type == '3wbrc' %}
+                                        {% if value.day_type == 'thursday_friday' %}
+                                            <div>
+                                                <div>
+                                                    Thursday 1:00 PM - 4:00 PM
+                                                </div>
+
+                                                <div>
+                                                    Friday 7:00 AM - 4:00 PM
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if value.day_type == 'sunday_monday' %}
+                                            <div>
+                                                <div>
+                                                    Sunday 1:00 PM - 4:00 PM
+                                                </div>
+
+                                                <div>
+                                                    Monday 7:00 AM - 4:00 PM
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    <div class="fw-bold">
+                                        {{ value.price.get_class_type_display }}
+                                    </div>
+
+                                    <div>
+                                        ${{ value.price.amount|stringformat:"s"|slice:":-3" }}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {% if value.seats > '0' %}
+                                        {{ value.seats }}
+                                    {% elif value.seats == '0' and value.price.class_type == '3wbrc' %}
+                                        Call for Availability
+                                    {% else %}
+                                        CLASS FULL
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if object_list|length == 0 and class_type == '3wbrc' %}
+        <div class="container py-3 fw-bold text-danger text-center">
+            Sorry but there are no available 3-Wheel classes. However, if you had a group of at least 2 students we can
+            add a private class. Call us for more information.
+        </div>
+    {% elif object_list|length == 0 and class_type == 'src' %}
+        <div class="container py-3 fw-bold text-danger text-center">
+            Sorry but there are no available Skilled Rider classes. However, if you had a group of at least 4 students
+            we can add a private class. Call us for more information.
+        </div>
+    {% elif object_list|length == 0 %}
+        <div class="container py-3 fw-bold text-danger text-center">
+            Sorry but there are no available classes.
+        </div>
+    {% endif %}
+{% endblock %}

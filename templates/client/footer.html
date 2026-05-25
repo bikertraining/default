@@ -1,60 +1,113 @@
-<footer class="footer mt-auto py-3 bg-dark w-100 bottom-0 d-print-none">
-    <div class="container">
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-schedule-index' %}">
-                    Schedule
-                </a>
-            </li>
+{% load static %}
 
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-courses-index' %}">
-                    Courses
-                </a>
-            </li>
+{% load get_facebook_url %}
 
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-faq-index' %}">
-                    FAQs
-                </a>
-            </li>
+{% load get_instagram_url %}
 
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-contact-index' %}">
-                    Contact Us
-                </a>
-            </li>
+<footer class="d-print-none">
+    <!-- Dark Top Strip -->
+    <div class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <div class="col-md-4 mb-3">
+                    <div class="fw-bold accent">
+                        Biker Training LLC
+                    </div>
 
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-team-index' %}">
-                    Join our Team
-                </a>
-            </li>
-        </ul>
+                    <div class="small mt-2">
+                        Professional motorcycle safety training for all skill levels.
+                    </div>
+                </div>
 
-        <div class="mt-3 text-center text-white">
-            &copy; {% now "Y" %} Biker Training LLC
+                <div class="col-md-4 mb-3">
+                    <div class="fw-bold accent mb-3">
+                        Quick Links
+                    </div>
+
+                    <ul class="list-unstyled small mt-2">
+                        <li>
+                            <a href="{% url 'client-about-index' %}"
+                               class="text-white text-decoration-none"
+                               aria-label="About Us">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li class="mt-3">
+                            <a href="{% url 'client-contact-index' %}"
+                               class="text-white text-decoration-none"
+                               aria-label="Contact Us">
+                                Contact Us
+                            </a>
+                        </li>
+
+                        <li class="mt-3">
+                            <a href="{% url 'client-team-index' %}"
+                               class="text-white text-decoration-none"
+                               aria-label="Join Our Team">
+                                Join Our Team
+                            </a>
+                        </li>
+
+                        <li class="mt-3">
+                            <a href="{% url 'client-legal-privacy' %}"
+                               class="text-white text-decoration-none"
+                               aria-label="Privacy Policy">
+                                Privacy Policy
+                            </a>
+                        </li>
+
+                        <li class="mt-3">
+                            <a href="{% url 'client-legal-tos' %}"
+                               class="text-white text-decoration-none"
+                               aria-label="Terms of Service">
+                                Terms of Service
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="fw-bold accent">
+                        Social Media
+                    </div>
+
+                    <div class="vstack gap-3 mx-auto">
+                        <div>
+                            <a href="{% get_facebook_url %}"
+                               target="_blank"
+                               aria-label="Facebook">
+                                <img src="{% static '/img/fb/Facebook_Logo_Primary.webp' %}"
+                                     alt="Facebook"
+                                     height="25"
+                                     width="25"
+                                     class="img-fluid me-3 mt-3"
+                                     loading="eager"/>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="{% get_instagram_url %}"
+                               target="_blank"
+                               aria-label="Instagram">
+                                <img src="{% static '/img/ig/Instagram_Glyph_Gradient.webp' %}"
+                                     alt="Instagram"
+                                     height="25"
+                                     width="25"
+                                     class="img-fluid me-3 mt-3"
+                                     loading="eager"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <ul class="nav justify-content-center mt-3">
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-legal-privacy' %}">
-                    Privacy Policy
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link px-2"
-                   href="{% url 'client-legal-tos' %}">
-                    Terms of Service
-                </a>
-            </li>
-        </ul>
+    <!-- Light Bottom Strip -->
+    <div class="bg-light text-center py-3">
+        <small class="text-dark">
+            &copy; {% now "Y" %} Biker Training LLC
+        </small>
     </div>
 </footer>

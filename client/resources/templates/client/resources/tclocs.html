@@ -1,0 +1,59 @@
+{% block content %}
+    <section class="py-5 bg-dark text-white">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-3 fs-4">
+                Pre‑Ride Safety Checklist (TCLOCS)
+            </h2>
+
+            <div class="text-center">
+                <a href="{% url 'client-resources-downloads-tclocs' %}"
+                   target="_blank"
+                   class="btn btn-accent btn-sm text-dark">
+                    <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                </a>
+            </div>
+
+            <div class="row g-4 mt-1">
+                <div class="col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Helmet, gloves, jacket, boots
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Tire pressure & tread check
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Brake function test
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Lights & signals working
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Chain tension & lubrication
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Fuel level & leaks
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Mirrors adjusted
+                        </li>
+
+                        <li class="list-group-item bg-dark text-white">
+                            &check; Mental readiness & focus
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

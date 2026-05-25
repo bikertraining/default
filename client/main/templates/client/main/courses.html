@@ -1,0 +1,119 @@
+{% load static %}
+
+{% block content %}
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-3 text-dark">
+                Our Training Programs
+            </h2>
+
+            <div class="text-center mb-3">
+                Whether you are totally new to motorcycles, a returning rider or already experienced, we have a course
+                to meet your needs.
+            </div>
+
+            <div class="text-center mb-3">
+                Our Basic RiderCourse and 3-Wheel RiderCourse meets the state of Florida license endorsement
+                requirement.
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100 bg-dark">
+                        <div class="card-body">
+                            <h3 class="fw-bold text-center fs-4 text-white">
+                                Basic RiderCourse
+                            </h3>
+
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static '/img/stock/brc-354x236.webp' %}"
+                                     alt="Basic RiderCourse"
+                                     width="354"
+                                     height="236"
+                                     class="img-fluid rounded text-center"/>
+                            </div>
+
+                            <div class="text-white mt-3">
+                                A complete introduction to motorcycling - controls, balance, cornering, braking, and
+                                street strategies for brand‑new riders.
+                            </div>
+
+                            <div class="mt-4 d-grid gap-3 d-md-block text-center">
+                                <a href="{% url 'client-schedule-index' %}"
+                                   class="btn btn-accent btn-md mx-3 text-dark fw-semibold"
+                                   type="button"
+                                   aria-label="Basic RiderCourse Schedule">
+                                    <i class="bi bi-calendar3 me-1"></i> Basic RiderCourse Schedule
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100 bg-dark">
+                        <div class="card-body">
+                            <h3 class="fw-bold text-center fs-4 text-white">
+                                3-Wheel RiderCourse
+                            </h3>
+
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static '/img/stock/3wbrc-354x236.webp' %}"
+                                     alt="3-Wheel Basic RiderCourse"
+                                     width="354"
+                                     height="236"
+                                     class="img-fluid rounded"/>
+                            </div>
+
+                            <p class="text-white mt-3">
+                                Designed for 3‑wheel motorcycles - learn starting, stopping, turning, and emergency
+                                maneuvers on a stable three‑wheel platform.
+                            </p>
+
+                            <div class="mt-4 d-grid gap-3 d-md-block text-center">
+                                <a href="{% url 'client-schedule-class-type' '3wbrc' %}"
+                                   class="btn btn-accent btn-md mx-3 text-dark fw-semibold"
+                                   type="button"
+                                   aria-label="3-Wheel RiderCourse Schedule">
+                                    <i class="bi bi-calendar3 me-1"></i> 3-Wheel RiderCourse Schedule
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100 bg-dark">
+                        <div class="card-body">
+                            <h3 class="fw-bold text-center fs-4 text-white">
+                                Skilled RiderCourse
+                            </h3>
+
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static '/img/stock/src-354x236.webp' %}"
+                                     alt="Skilled RiderCourse"
+                                     width="354"
+                                     height="236"
+                                     class="img-fluid rounded"/>
+                            </div>
+
+                            <p class="text-white mt-3">
+                                For licensed riders who want to refine braking, cornering, and real‑world street
+                                strategies using their own motorcycle.
+                            </p>
+
+                            <div class="mt-4 d-grid gap-3 d-md-block text-center">
+                                <a href="{% url 'client-schedule-class-type' 'src' %}"
+                                   class="btn btn-accent btn-md mx-3 text-dark fw-semibold"
+                                   type="button"
+                                   aria-label="Skilled RiderCourse Schedule">
+                                    <i class="bi bi-calendar3 me-1"></i> Skilled RiderCourse Schedule
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

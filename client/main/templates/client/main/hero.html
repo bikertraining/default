@@ -1,0 +1,57 @@
+{% load static %}
+
+{% block content %}
+    <section class="bg-dark text-white py-5">
+        <div class="container py-3">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center mb-4 mt-lg-0 d-lg-none">
+                    <img src="{% static '/img/bikertraining/logo_bike_only.webp' %}"
+                         alt="Motorcycle Training"
+                         width="510"
+                         height="200"
+                         class="img-fluid rounded"
+                         fetchpriority="high">
+                </div>
+
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bolder">
+                        Ride Smarter. Ride Safer.
+                    </h1>
+
+                    <div class="lead mt-3">
+                        Professional motorcycle training for every skill level — from first‑time riders to advanced
+                        road mastery.
+                    </div>
+
+                    <div class="lead mt-3">
+                        Located in Pensacola Florida.
+                    </div>
+
+                    <div class="mt-4 d-grid gap-3 d-md-block">
+                        <a href="{% url 'client-schedule-index' %}"
+                           class="btn btn-accent btn-lg me-3 text-dark fw-semibold"
+                           type="button"
+                           aria-label="View Our Schedule">
+                            View Our Schedule
+                        </a>
+
+                        <a href="{% url 'client-courses-index' %}"
+                           class="btn btn-outline-light btn-lg me-3"
+                           type="button"
+                           aria-label="View Courses">
+                            View Courses
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 text-center mt-4 mt-lg-0 d-none d-lg-block">
+                    <img src="{% static '/img/bikertraining/logo_bike_only.webp' %}"
+                         alt="Motorcycle Training"
+                         width="510"
+                         height="200"
+                         class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

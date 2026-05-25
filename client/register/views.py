@@ -1,12 +1,12 @@
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.mail import mail_managers
+from django.core.mail import EmailMessage
 from django.http import Http404
 from django.shortcuts import redirect
 from django.template import loader
 from django.views import generic
-
+from datetime import date
 from client.register import models
 from util.merchant import authorizenet, eprocessing, filters
 
@@ -42,7 +42,11 @@ class RegisterForm(forms.Form):
 
     dls = forms.CharField(required=True, widget=forms.Select)
 
-    dob = forms.CharField(required=True)
+    dob_day = forms.CharField(required=True)
+
+    dob_month = forms.CharField(required=True)
+
+    dob_year = forms.CharField(required=True)
 
     email = forms.CharField(required=True)
 
@@ -79,6 +83,12 @@ class RegisterForm(forms.Form):
                 code='error')
 
         return coupon_code
+
+    @staticmethod
+    def age_calculator(dob_month, dob_day, dob_year):
+        today = date.today()
+
+        return today.year - int(dob_year) - ((today.month, today.day) < (int(dob_month), int(dob_day)))
 
     def charge(self):
         # Get Schedule Object
@@ -147,32 +157,49 @@ class RegisterForm(forms.Form):
             'client/register/email/transaction_declined.html',
             {
                 'address': self.cleaned_data['address'],
-                'city': self.cleaned_data['city'],
                 'amount': self.cleaned_data['amount'],
+                'city': self.cleaned_data['city'],
+                'class_type': result.price.get_class_type_display(),
+                'comment': self.cleaned_data['comment'] if self.cleaned_data.get('comment') is not None else '',
                 'coupon_code': self.cleaned_data['coupon_code'] if self.cleaned_data.get('coupon_code') != '' else '',
                 'credit_card_number': f"Name {self.cleaned_data['credit_card_first_name']} {self.cleaned_data['credit_card_last_name']} "
                                       f"# {self.cleaned_data['credit_card_number']} "
                                       f"EXP {self.cleaned_data['credit_card_month']} / {self.cleaned_data['credit_card_year']} "
                                       f"CVV {self.cleaned_data['credit_card_cvv2']}",
+                'dln': self.cleaned_data['dln'],
+                'dls': self.cleaned_data['dls'],
+                'dob': f"{self.cleaned_data['dob_month']}/{self.cleaned_data['dob_day']}/{self.cleaned_data['dob_year']}",
+                'dob_age': self.age_calculator(self.cleaned_data['dob_month'], self.cleaned_data['dob_day'], self.cleaned_data['dob_year']),
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
                 'ipaddress': self.cleaned_data['ipaddress'],
                 'last_name': self.cleaned_data['last_name'],
                 'phone': self.cleaned_data['phone'],
                 'reason': payment,
+                'schedule': filters.format_date(str(result.date_from),
+                                                str(result.date_to)),
+                'schedule_day': result.get_day_type_display(),
                 'state': self.cleaned_data['state'],
                 'suffix': self.cleaned_data['suffix'] if self.cleaned_data.get('suffix') is not None else '',
+                'xpl': filters.format_xpl(
+                    self.cleaned_data['xpl'] if self.cleaned_data.get('xpl') is not None else 'none'),
                 'zipcode': self.cleaned_data['zipcode']
             }
         )
 
         # Email Managers
-        mail_managers(
-            subject=f"Declined Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
-            message=None,
-            fail_silently=True,
-            html_message=html_message_fraud
-        )
+        try:
+            msg = EmailMessage(
+                f"Declined Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
+                html_message_fraud,
+                settings.DEFAULT_FROM_EMAIL,
+                settings.MANAGERS,
+                reply_to=[settings.DEFAULT_FROM_EMAIL]
+            )
+            msg.content_subtype = 'html'
+            msg.send()
+        except Exception:
+            pass
 
     def send_email_charged(self, result: models.Schedule):
         # Subtract seat from schedule
@@ -202,7 +229,8 @@ class RegisterForm(forms.Form):
                 'credit_card_number': alter_credit_card_number,
                 'dln': self.cleaned_data['dln'],
                 'dls': self.cleaned_data['dls'],
-                'dob': self.cleaned_data['dob'],
+                'dob': f"{self.cleaned_data['dob_month']}/{self.cleaned_data['dob_day']}/{self.cleaned_data['dob_year']}",
+                'dob_age': self.age_calculator(self.cleaned_data['dob_month'], self.cleaned_data['dob_day'], self.cleaned_data['dob_year']),
                 'email': self.cleaned_data['email'],
                 'first_name': self.cleaned_data['first_name'],
                 'ipaddress': self.cleaned_data['ipaddress'],
@@ -220,12 +248,18 @@ class RegisterForm(forms.Form):
         )
 
         # Email Managers
-        mail_managers(
-            subject=f"Course Registration for {result.price.get_class_type_display()} - ${self.cleaned_data['amount']}",
-            message=None,
-            fail_silently=True,
-            html_message=html_message
-        )
+        try:
+            msg = EmailMessage(
+                f"Course Registration for {result.price.get_class_type_display()} - ${self.cleaned_data['amount']}",
+                html_message,
+                settings.DEFAULT_FROM_EMAIL,
+                settings.MANAGERS,
+                reply_to=[settings.DEFAULT_FROM_EMAIL]
+            )
+            msg.content_subtype = 'html'
+            msg.send()
+        except Exception:
+            pass
 
         # Save Student Information - Will be removed once class is deleted
         # This is only here in case an email was not received, and we are missing information
@@ -239,9 +273,11 @@ class RegisterForm(forms.Form):
             credit_card_number=alter_credit_card_number,
             dln=self.cleaned_data['dln'],
             dls=self.cleaned_data['dls'],
-            dob=self.cleaned_data['dob'],
+            dob=f"{self.cleaned_data['dob_month']}/{self.cleaned_data['dob_day']}/{self.cleaned_data['dob_year']}",
+            dob_age=self.age_calculator(self.cleaned_data['dob_month'], self.cleaned_data['dob_day'], self.cleaned_data['dob_year']),
             email=self.cleaned_data['email'],
             first_name=self.cleaned_data['first_name'],
+            ipaddress=self.cleaned_data['ipaddress'],
             last_name=self.cleaned_data['last_name'],
             phone=self.cleaned_data['phone'],
             schedule_date=filters.format_date(str(result.date_from),
@@ -317,7 +353,7 @@ class Index(generic.FormView):
                 'coupon_code': form.cleaned_data['coupon_code'] if form.cleaned_data.get('coupon_code') != '' else '',
                 'dln': form.cleaned_data['dln'],
                 'dls': form.cleaned_data['dls'],
-                'dob': form.cleaned_data['dob'],
+                'dob': f"{form.cleaned_data['dob_month']}/{form.cleaned_data['dob_day']}/{form.cleaned_data['dob_year']}",
                 'email': form.cleaned_data['email'],
                 'first_name': form.cleaned_data['first_name'],
                 'last_name': form.cleaned_data['last_name'],
@@ -334,18 +370,49 @@ class Index(generic.FormView):
         )
 
         # Email Managers
-        mail_managers(
-            subject=f"Wait List for {result.price.get_class_type_display()} - ${result.price.amount}",
-            message=None,
-            fail_silently=True,
-            html_message=html_message
-        )
+        try:
+            msg = EmailMessage(
+                f"Wait List for {result.price.get_class_type_display()} - ${result.price.amount}",
+                html_message,
+                settings.DEFAULT_FROM_EMAIL,
+                settings.MANAGERS,
+                reply_to=[settings.DEFAULT_FROM_EMAIL]
+            )
+            msg.content_subtype = 'html'
+            msg.send()
+        except Exception:
+            pass
+
+    @staticmethod
+    def detect_fraud(form):
+        # Credit Card Number
+        if models.Fraud.objects.filter(fraud_type='ccn', is_active=True,
+                                       name=form.cleaned_data['credit_card_number']).exists():
+            return True
+
+        # Email Address
+        elif models.Fraud.objects.filter(fraud_type='email', is_active=True,
+                                         name=form.cleaned_data['email'].lower()).exists():
+            return True
+
+        # IP Address
+        elif models.Fraud.objects.filter(fraud_type='ipaddress', is_active=True,
+                                         name=form.cleaned_data['ipaddress']).exists():
+            return True
+
+        # Success - Nothing bad detected
+        else:
+            return False
 
     def form_valid(self, form):
         try:
             result = models.Schedule.objects.get(id=self.kwargs['id'])
         except models.Schedule.DoesNotExist:
             raise Http404('Schedule does not exist')
+
+        # Detect Fraud
+        if self.detect_fraud(form):
+            return redirect('client-register-blocked')
 
         # Validate we actually have enough seats
         if result.seats <= '0':
@@ -406,5 +473,20 @@ class ClassFull(generic.TemplateView):
         context['description'] = 'Register - Class Full'
         context['keywords'] = ''
         context['title'] = 'Register - Class Full'
+
+        return context
+
+class Blocked(generic.TemplateView):
+    """
+    Client - Register - Blocked
+    """
+
+    template_name = 'client/register/blocked.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['description'] = 'Register - Blocked'
+        context['keywords'] = ''
+        context['title'] = 'Register - Blocked'
 
         return context

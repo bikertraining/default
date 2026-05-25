@@ -48,7 +48,7 @@ class Index(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Search Coach'
+        context['description'] = 'Search Coaches'
         context['keywords'] = ''
         context['title'] = 'Search Coaches'
 
@@ -67,7 +67,7 @@ class Inactive(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Search Inactive Coach'
+        context['description'] = 'Search Inactive Coaches'
         context['keywords'] = ''
         context['title'] = 'Search Inactive Coaches'
 

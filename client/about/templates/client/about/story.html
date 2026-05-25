@@ -1,0 +1,35 @@
+{% load static %}
+
+{% block content %}
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-md-6">
+                    <img src="{% static '/img/stock/story-600x400.webp' %}"
+                         alt="Our Story"
+                         width="600"
+                         height="400"
+                         class="img-fluid rounded shadow">
+                </div>
+
+                <div class="col-md-6">
+                    <h2 class="fw-bold">
+                        Our Story
+                    </h2>
+
+                    <div class="mt-3">
+                        Founded by passionate riders and certified instructors, our school was built on one mission:
+                        to make motorcycle training safer, smarter, and more accessible for everyone.
+                    </div>
+
+                    <div class="mt-3">
+                        Over the years, we’ve trained thousands of riders — from complete beginners to advanced
+                        enthusiasts — helping them build confidence, master essential skills, and enjoy the freedom of
+                        the open road.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

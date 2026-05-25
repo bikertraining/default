@@ -32,3 +32,5 @@ class Index(generic.TemplateView):
             return result.link_3wbrc
         elif self.kwargs['class_type'] == 'src':
             return result.link_src
+        else:
+            return '#'

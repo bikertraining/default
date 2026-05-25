@@ -1,0 +1,47 @@
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center fs-4">
+                Study Materials
+            </h2>
+
+            <div class="row g-4 mt-1">
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h3 class="fw-bold fs-4">
+                            Basic Course Homework
+                        </h3>
+
+                        <div class="mb-3">
+                            Match the number of the question on the left to the answer on the right.
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-homework-brc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h3 class="fw-bold fs-4">
+                            3-Wheel Course Homework
+                        </h3>
+
+                        <div class="mb-3">
+                            Match the number of the question on the left to the answer on the right.
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-homework-3wbrc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

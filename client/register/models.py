@@ -11,6 +11,16 @@ class Coupon(models.Coupon):
         verbose_name_plural = 'Client Coupons'
 
 
+class Fraud(models.Fraud):
+    class Meta:
+        default_permissions = ()
+
+        proxy = True
+
+        verbose_name = 'Client Fraud'
+        verbose_name_plural = 'Client Fraud'
+
+
 class Price(models.Price):
     class Meta:
         default_permissions = ()

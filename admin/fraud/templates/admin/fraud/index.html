@@ -1,0 +1,69 @@
+{% extends "admin/base.html" %}
+
+{% block style %}
+    <style>
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #198754;
+            color: #FFFFFF;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Fraud Strings (Light) -->
+    {% if object_list|length > 0 %}
+        <section class="py-3 bg-light">
+            <div class="container">
+                <div class="d-print-none fw-bold mt-2 mb-3">
+                    <i class="bi bi-exclamation-diamond me-1"></i> {{ object_list|length }} Fraud Strings
+                </div>
+
+                <div class="table-responsive shadow rounded">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-dark text-center">
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Active
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                        {% for value in object_list %}
+                            <tr onclick="location.href='{% url 'admin-fraud-edit' value.pk %}'">
+                                <td>
+                                    {{ value.name }}
+                                </td>
+
+                                <td>
+                                    {{ value.get_fraud_type_display }}
+                                </td>
+
+                                <td>
+                                    {% if value.is_active %}
+                                        <span class="text-success">Yes</span>
+                                    {% else %}
+                                        <span class="text-danger">No</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <div class="container fw-bold mt-3 text-danger">
+            Sorry but there are no available fraud strings.
+        </div>
+    {% endif %}
+{% endblock %}

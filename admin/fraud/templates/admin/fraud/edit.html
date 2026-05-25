@@ -1,0 +1,141 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% load get_form_select %}
+
+{% load get_form_switch %}
+
+{% load get_form_text %}
+
+{% block css %}
+    <link href="{% static '/css/form.css' %}"
+          rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script>
+        function toggleButton() {
+            const submit_button = document.getElementById("submit_button");
+
+            const submit_processing = document.getElementById("submit_processing");
+
+            if (submit_button) {
+                submit_button.style.display = "none"; // Hide the button
+                submit_processing.style.display = "inline-block"; // Show the button
+            } else {
+                submit_processing.style.display = "none"; // Hide the button
+                submit_button.style.display = "inline-block"; // Show the button
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="h3 mb-3 fs-4">
+                            <i class="bi bi-pencil-square me-1"></i> Modify Fraud String
+                        </div>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=object.name %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_select label='Type' name='fraud_type' required=True options=form.fields.fraud_type.choices error_text=form.fraud_type.errors value=object.fraud_type %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_switch label='Active' name='is_active' value=object.is_active %}
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-primary"
+                                        type="submit"
+                                        id="submit_button"
+                                        onclick="toggleButton()">
+                                    <i class="bi bi-check2-circle me-1"></i> Update Fraud String
+                                </button>
+
+                                <button class="btn btn-primary"
+                                        type="button"
+                                        id="submit_processing"
+                                        style="display: none;"
+                                        disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                    Processing, please wait...
+                                </button>
+
+                                <button class="px-4 btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        type="button">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules -->
+            {% include 'admin/fraud/rules.html' %}
+        </div>
+    </div>
+
+    <form action="{% url 'admin-fraud-delete' object.id %}"
+          method="post">
+        {% csrf_token %}
+        <div aria-hidden="true"
+             aria-labelledby="deleteModalLabel"
+             class="modal fade"
+             id="deleteModal"
+             tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5"
+                            id="deleteModalLabel">
+                            <i class="bi bi-exclamation-triangle text-danger me-1"></i> Warning
+                        </h1>
+
+                        <button aria-label="Close"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                type="button">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        Continuing will remove this fraud string.
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                                type="button">
+                            <i class="bi bi-x-square me-1"></i> Close
+                        </button>
+
+                        <button class="btn btn-danger"
+                                type="submit">
+                            <i class="bi bi-trash3 me-1"></i> Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

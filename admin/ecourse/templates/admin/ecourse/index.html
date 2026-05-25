@@ -2,36 +2,80 @@
 
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static '/css/form.css' %}">
-{% endblock %}
-
 {% load get_form_text %}
 
+{% block css %}
+    <link href="{% static '/css/form.css' %}"
+          rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script>
+        function toggleButton() {
+            const submit_button = document.getElementById("submit_button");
+
+            const submit_processing = document.getElementById("submit_processing");
+
+            if (submit_button) {
+                submit_button.style.display = "none"; // Hide the button
+                submit_processing.style.display = "inline-block"; // Show the button
+            } else {
+                submit_processing.style.display = "none"; // Hide the button
+                submit_button.style.display = "inline-block"; // Show the button
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
-    <div class="mt-3">
-        <form method="post">
-            {% csrf_token %}
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="h3 mb-3 fs-4">
+                            <i class="bi bi-pencil-square me-1"></i> Modify eCourse URLs
+                        </div>
 
-            <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-6">
-                <div class="col-md-12">
-                    {% get_form_text label='3WBRC URL - eP1x7-9' name='link_3wbrc' required=True help_text='MSF Unique Link' error_text=form.link_3wbrc.errors value=object.link_3wbrc %}
-                </div>
+                        <form method="post">
+                            {% csrf_token %}
 
-                <div class="col-md-12">
-                    {% get_form_text label='BRC URL - eP1x11' name='link_brc' required=True help_text='MSF Unique Link' error_text=form.link_brc.errors value=object.link_brc %}
-                </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% get_form_text label='3WBRC URL - eP1x7-9' name='link_3wbrc' required=True help_text='MSF Unique Link' error_text=form.link_3wbrc.errors value=object.link_3wbrc %}
+                                </div>
 
-                <div class="col-md-12">
-                    {% get_form_text label='SRC URL - SS1' name='link_src' required=True help_text='MSF Unique Link' error_text=form.link_src.errors value=object.link_src %}
+                                <div class="col-md-12">
+                                    {% get_form_text label='BRC URL - eP1x11' name='link_brc' required=True help_text='MSF Unique Link' error_text=form.link_brc.errors value=object.link_brc %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_text label='SRC URL - SS1' name='link_src' required=True help_text='MSF Unique Link' error_text=form.link_src.errors value=object.link_src %}
+                                </div>
+                            </div>
+
+                            <button class="w-100 btn btn-primary btn-lg"
+                                    type="submit"
+                                    id="submit_button"
+                                    onclick="toggleButton()">
+                                <i class="bi bi-check2-circle me-1"></i> Update eCourse Links
+                            </button>
+
+                            <button class="w-100 btn btn-primary btn-lg"
+                                    type="button"
+                                    id="submit_processing"
+                                    style="display: none;"
+                                    disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                Processing, please wait...
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <button class="px-4 btn btn-outline-success"
-                    onclick="document.getElementById('loading').style.display = 'block'"
-                    type="submit">
-                Update
-            </button>
-        </form>
+        </div>
     </div>
 {% endblock %}

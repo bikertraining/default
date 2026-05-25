@@ -24,4 +24,9 @@ urlpatterns = [
         views.ClassFull.as_view(),
         name='client-register-class-full'
     ),
+    path(
+        'blocked/',
+        views.Blocked.as_view(),
+        name='client-register-blocked'
+    ),
 ]

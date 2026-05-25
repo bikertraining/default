@@ -1,0 +1,36 @@
+{% block content %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq10"
+                    aria-expanded="false"
+                    aria-controls="faq10">
+                Do we get paid?
+            </button>
+        </h2>
+
+        <div id="faq10"
+             class="accordion-collapse collapse"
+             data-bs-parent="#accordionFaq">
+            <div class="accordion-body">
+                Yes, of course! There are currently 3 pay grades.
+
+                <ul class="list-group list-group-numbered mt-3">
+                    <li class="list-group-item border-0">
+                        Range Aide
+                    </li>
+
+                    <li class="list-group-item border-0">
+                        Range Aide &plus; Demo Rider
+                    </li>
+
+                    <li class="list-group-item border-0">
+                        Coach
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,56 +1,63 @@
 {% load static %}
 
-{% load get_business_phone %}
-
-<nav class="navbar bg-dark navbar-expand-lg d-print-none"
-     data-bs-theme="dark">
-    <div class="container-fluid">
-        <a href="{% url 'admin-schedule-index' %}">
-            <img alt="Biker Training LLC"
-                 class="inline-block img-fluid"
-                 height="100"
-                 loading="eager"
-                 src="{% static '/img/bikertraining/logo_color_white.webp' %}"
-                 width="255"/>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top d-print-none">
+    <div class="container">
+        <!-- Logo - Mobile -->
+        <a href="{% url 'admin-schedule-index' %}"
+           class="navbar-brand fw-bold d-lg-none">
+            <span class="accent">Biker</span> Training
         </a>
 
-        <button aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                data-bs-target="#navbarSupportedContent"
+        <!-- Logo - Desktop -->
+        <a href="{% url 'admin-schedule-index' %}"
+           class="navbar-brand d-none d-lg-block">
+            <img src="{% static '/img/bikertraining/logo_color_white.webp' %}"
+                 alt="Biker Training LLC"
+                 width="255"
+                 height="100"
+                 class="inline-block img-fluid"
+                 loading="eager"/>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler"
+                type="button"
                 data-bs-toggle="collapse"
-                class="navbar-toggler"
-                type="button">
+                data-bs-target="#mainNav"
+                aria-label="Toggle Navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse ms-5"
-             id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item me-2">
-                    <a class="nav-link"
-                       href="/">
-                        <i class="bi bi-house-door-fill me-1"></i>
-                        Home
+        <!-- Nav Links -->
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a href="{% url 'client-main-index' %}"
+                       class="nav-link"
+                       aria-label="Home">
+                        <i class="bi bi-house-door-fill me-1"></i> Home
                     </a>
                 </li>
 
-                <li class="nav-item dropdown me-2">
-                    <a aria-expanded="false"
+                <!-- Schedule -->
+                <li class="nav-item dropdown">
+                    <a href="#"
+                       aria-expanded="false"
+                       aria-label="Schedule"
                        class="nav-link dropdown-toggle"
                        data-bs-toggle="dropdown"
-                       href="#"
                        role="button">
-                        <i class="bi bi-calendar3 me-1"></i>
-                        Schedule
+                        <i class="bi bi-calendar3 me-1"></i> Schedule
                     </a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-dark">
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-schedule-index' %}">
-                                <i class="bi bi-search me-1"></i>
-                                Search
+                            <a href="{% url 'admin-schedule-index' %}"
+                               class="dropdown-item"
+                               aria-label="Search">
+                                <i class="bi bi-search me-1"></i> Search
                             </a>
                         </li>
 
@@ -59,39 +66,32 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-schedule-create' %}">
-                                <i class="bi bi-plus-lg me-1"></i>
-                                Create Schedule
+                            <a href="{% url 'admin-schedule-create' %}"
+                               class="dropdown-item"
+                               aria-label="Create Schedule">
+                                <i class="bi bi-plus-lg me-1"></i> Create Schedule
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="nav-item me-2">
-                    <a class="nav-link"
-                       href="{% url 'admin-price-index' %}">
-                        <i class="bi bi-cash-coin me-1"></i>
-                        Prices
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown me-2">
-                    <a aria-expanded="false"
+                <!-- Coaches -->
+                <li class="nav-item dropdown">
+                    <a href="#"
+                       aria-expanded="false"
+                       aria-label="Coaches"
                        class="nav-link dropdown-toggle"
                        data-bs-toggle="dropdown"
-                       href="#"
                        role="button">
-                        <i class="bi bi-person-arms-up me-1"></i>
-                        Coaches
+                        <i class="bi bi-person-arms-up me-1"></i> Coaches
                     </a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-dark">
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-coach-index' %}">
-                                <i class="bi bi-search me-1"></i>
-                                Active Coaches
+                            <a href="{% url 'admin-coach-index' %}"
+                               class="dropdown-item"
+                               aria-label="Active Coaches">
+                                <i class="bi bi-search me-1"></i> Active Coaches
                             </a>
                         </li>
 
@@ -100,10 +100,10 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-coach-create' %}">
-                                <i class="bi bi-plus-lg me-1"></i>
-                                Create Coach
+                            <a href="{% url 'admin-coach-create' %}"
+                               class="dropdown-item"
+                               aria-label="Create Coach">
+                                <i class="bi bi-plus-lg me-1"></i> Create Coach
                             </a>
                         </li>
 
@@ -112,31 +112,32 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-coach-inactive' %}">
-                                <i class="bi bi-search me-1"></i>
-                                InActive Coaches
+                            <a href="{% url 'admin-coach-inactive' %}"
+                               class="dropdown-item"
+                               aria-label="InActive Coaches">
+                                <i class="bi bi-search me-1"></i> InActive Coaches
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown me-2">
-                    <a aria-expanded="false"
+                <!-- Coupons -->
+                <li class="nav-item dropdown">
+                    <a href="#"
+                       aria-expanded="false"
+                       aria-label="Coupons"
                        class="nav-link dropdown-toggle"
                        data-bs-toggle="dropdown"
-                       href="#"
                        role="button">
-                        <i class="bi bi-tags-fill me-1"></i>
-                        Coupons
+                        <i class="bi bi-tags-fill me-1"></i> Coupons
                     </a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-dark">
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-coupon-index' %}">
-                                <i class="bi bi-search me-1"></i>
-                                Search
+                            <a href="{% url 'admin-coupon-index' %}"
+                               class="dropdown-item"
+                               aria-label="Search">
+                                <i class="bi bi-search me-1"></i> Search
                             </a>
                         </li>
 
@@ -145,40 +146,99 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="{% url 'admin-coupon-create' %}">
-                                <i class="bi bi-plus-lg me-1"></i>
-                                Create Coupon
+                            <a href="{% url 'admin-coupon-create' %}"
+                               class="dropdown-item"
+                               aria-label="Create Coupon">
+                                <i class="bi bi-plus-lg me-1"></i> Create Coupon
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="nav-item me-2">
-                    <a class="nav-link"
-                       href="{% url 'admin-ecourse-index' %}">
-                        <i class="bi bi-link-45deg me-1"></i>
-                        eCourse
+                <!-- Fraud -->
+                <li class="nav-item dropdown">
+                    <a href="#"
+                       aria-expanded="false"
+                       aria-label="Coupons"
+                       class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown"
+                       role="button">
+                        <i class="bi bi-shield-slash me-1"></i> Fraud
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a href="{% url 'admin-fraud-index' %}"
+                               class="dropdown-item"
+                               aria-label="Search">
+                                <i class="bi bi-search me-1"></i> Search
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'admin-fraud-create' %}"
+                               class="dropdown-item"
+                               aria-label="Create Fraud">
+                                <i class="bi bi-plus-lg me-1"></i> Create Fraud
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'admin-payment-index' %}"
+                       class="nav-link"
+                       aria-label="Payment">
+                        <i class="bi bi-credit-card me-1"></i> Payment
                     </a>
                 </li>
 
-                <li class="nav-item me-2">
-                    <a class="nav-link"
-                       href="{% url 'admin-payment-index' %}">
-                        <i class="bi bi-credit-card me-1"></i>
-                        Payment
+                <!-- Settings -->
+                <li class="nav-item dropdown">
+                    <a href="#"
+                       aria-expanded="false"
+                       aria-label="Settings"
+                       class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown"
+                       role="button">
+                        <i class="bi bi-gear me-1"></i> Settings
                     </a>
-                </li>
-            </ul>
 
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item me-2 mt-2">
-                    <form action="{% url 'logout' %}" method="post">
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a href="{% url 'admin-ecourse-index' %}"
+                               class="dropdown-item"
+                               aria-label="eCourse">
+                                <i class="bi bi-link-45deg me-1"></i> eCourse
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'admin-price-index' %}"
+                               class="dropdown-item"
+                               aria-label="Prices">
+                                <i class="bi bi-cash-coin me-1"></i> Prices
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}"
+                          method="post">
                         {% csrf_token %}
 
-                        <button type="submit" class="nav-link text-danger">
-                            <i class="bi bi-box-arrow-right me-1"></i>
-                            Logout
+                        <button type="submit"
+                                class="nav-link text-danger">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
                         </button>
                     </form>
                 </li>
@@ -186,17 +246,3 @@
         </div>
     </div>
 </nav>
-
-<div class="spinner" id="loading"></div>
-
-<script>
-    window.onload = function () {
-        let x = document.getElementById("loading");
-
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>

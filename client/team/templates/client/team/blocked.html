@@ -1,0 +1,33 @@
+{% extends "client/base.html" %}
+
+{% block content %}
+    <section class="bg-dark text-white">
+        <div class="container py-3">
+            <h1 class="fw-bold fs-3">
+                Thank you for reaching out to us!
+            </h1>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="mb-3">
+                Unfortunately, we could not validate your request.
+            </div>
+
+            <div class="mb-3">
+                Possible reasons include:
+            </div>
+
+            <ul class="list-group list-group-numbered mt-3">
+                <li class="list-group-item border-0 bg-light">
+                    Your IP Address has been blocked.
+                </li>
+
+                <li class="list-group-item border-0 bg-light">
+                    Your information did not pass our spam filters.
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}

@@ -12,9 +12,9 @@ class Index(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Motorcycle Training Schedule'
-        context['keywords'] = 'motorcycle training schedule, motorcycle classes near me, msf course, brc course'
-        context['title'] = 'Schedule'
+        context['description'] = 'View upcoming motorcycle training classes including the Basic RiderCourse, 3‑Wheel Course, and Skilled RiderCourse. Check availability and reserve your spot.'
+        context['keywords'] = 'motorcycle training schedule, rider course schedule, motorcycle class dates, Basic RiderCourse schedule, 3 wheel motorcycle course, skilled rider course'
+        context['title'] = 'Motorcycle Training Schedule'
         context['class_type'] = self.kwargs['class_type'] if self.kwargs else None
 
         return context

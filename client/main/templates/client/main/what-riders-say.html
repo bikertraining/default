@@ -1,0 +1,83 @@
+{% block content %}
+    <section class="bg-light py-5">
+        <div class="container">
+            <h5 class="text-center fw-bold mb-5 text-dark fw-bolder fs-2">
+                What Riders Say
+            </h5>
+
+            <div class="row g-4">
+                <!-- 1 -->
+                <div class="col-md-4">
+                    <div class="p-4 shadow-sm bg-white rounded">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+
+                        <div class="text-dark">
+                            "The instructors were amazing — I went from nervous to confident in one
+                            weekend."
+                        </div>
+
+                        <div class="fw-bold mt-2">
+                            - Chris
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="col-md-4">
+                    <div class="p-4 shadow-sm bg-white rounded">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+
+                        <p class="text-dark">
+                            "The advanced course completely changed how I ride. Worth every minute."
+                        </p>
+
+                        <div class="fw-bold mt-2">
+                            - Dana
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="col-md-4">
+                    <div class="p-4 shadow-sm bg-white rounded">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+
+                        <p class="text-dark">
+                            "Professional, friendly, and safety‑focused. Passed my test on the first try."
+                        </p>
+
+                        <div class="fw-bold mt-2">
+                            - Miguel
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light text-center pb-5">
+        <a href="{% url 'client-reviews-index' %}"
+           class="btn btn-accent btn-lg text-dark fw-semibold"
+           aria-label="Read More Reviews">
+            Read More Reviews
+        </a>
+    </section>
+{% endblock %}

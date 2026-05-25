@@ -1,0 +1,77 @@
+{% load static %}
+
+{% load get_brp_url %}
+
+{% block content %}
+    <section class="bg-light py-5">
+        <div class="container">
+            <h5 class="text-center fw-bold text-dark fw-bolder fs-2">
+                Sponsors
+            </h5>
+
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <a href="https://www.flhsmv.gov/driver-licenses-id-cards/motorcycle-rider-education-endorsements/florida-rider-training-program-courses/"
+                       target="_blank">
+                        <img src="{% static '/img/frtp/logo-200x138.webp' %}"
+                             alt="Florida Rider Training Program"
+                             width="200"
+                             height="138"
+                             class="img-fluid mt-3"
+                             loading="lazy"/>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="https://msf-usa.org/"
+                       target="_blank">
+                        <img src="{% static '/img/msf/logo-200x93.webp' %}"
+                             alt="Motorcycle Safety Foundation"
+                             width="200"
+                             height="93"
+                             class="img-fluid mt-5"
+                             loading="lazy"/>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="https://www.pensacolaharley.com/"
+                       target="_blank">
+                        <img src="{% static '/img/phd/logo-400x97.webp' %}"
+                             alt="Pensacola Harley-Davidson"
+                             width="400"
+                             height="97"
+                             class="img-fluid mt-5"
+                             loading="lazy"/>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <a href="https://www.pensacolamotorsports.com/"
+                       target="_blank">
+                        <img src="{% static '/img/pms/logo-137x36.webp' %}"
+                             alt="Pensacola Motorsports"
+                             width="137"
+                             height="36"
+                             class="img-fluid mt-5"
+                             loading="lazy"/>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% get_brp_url %}"
+                       target="_blank">
+                        <img src="{% static '/img/brp/logo-400x98.webp' %}"
+                             alt="Can-AM BRP"
+                             width="400"
+                             height="98"
+                             class="img-fluid mt-5"
+                             loading="lazy"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

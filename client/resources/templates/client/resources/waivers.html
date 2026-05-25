@@ -1,0 +1,77 @@
+{% block content %}
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center fs-4">
+                Student Waivers
+            </h2>
+
+            <div class="p-4 bg-white shadow rounded">
+                <div>
+                    All students must sign a liability waiver before participating in any training session.
+                    Motorcycle riding involves inherent risks, and while our instructors prioritize safety,
+                    students acknowledge responsibility for their own actions and decisions during training.
+                </div>
+
+                <div class="mt-3">
+                    Parents or guardians must sign waivers for students under 18 years old.
+                </div>
+            </div>
+
+            <div class="row g-4 mt-1">
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            Basic Course Waivers
+                        </h3>
+
+                        <div class="mb-3">
+                            Student waivers for the Basic RiderCourse (BRCu)
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-waivers-brc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            3-Wheel Course Waivers
+                        </h3>
+
+                        <div class="mb-3">
+                            Student waivers for the 3-Wheel Basic RiderCourse (3WBRCu)
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-waivers-3wbrc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            Skilled Course Waivers
+                        </h3>
+
+                        <div class="mb-3">
+                            Student waivers for the Skilled RiderCourse (BRC2u)
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-waivers-src' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

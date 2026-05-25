@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.mail import mail_managers
+from django.core.mail import EmailMessage
 from django.http import Http404
 from django.shortcuts import redirect
 from django.template import loader
@@ -130,7 +130,7 @@ class PaymentForm(forms.Form):
             'client/payment/email/transaction_declined.html',
             {
                 'address': self.cleaned_data['address'],
-                'amount': result.amount,
+                'amount': self.cleaned_data['amount'],
                 'city': self.cleaned_data['city'],
                 'coupon_code': self.cleaned_data['coupon_code'] if self.cleaned_data.get('coupon_code') != '' else '',
                 'credit_card_number': f"Name {self.cleaned_data['credit_card_first_name']} {self.cleaned_data['credit_card_last_name']} "
@@ -150,12 +150,18 @@ class PaymentForm(forms.Form):
         )
 
         # Email Managers
-        mail_managers(
-            subject=f"Declined Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
-            message=None,
-            fail_silently=True,
-            html_message=html_message_fraud
-        )
+        try:
+            msg = EmailMessage(
+                f"Declined Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
+                html_message_fraud,
+                settings.DEFAULT_FROM_EMAIL,
+                settings.MANAGERS,
+                reply_to=[settings.DEFAULT_FROM_EMAIL]
+            )
+            msg.content_subtype = 'html'
+            msg.send()
+        except Exception:
+            pass
 
     def send_email_charged(self, result: models.Price):
         if result.is_active:
@@ -189,12 +195,18 @@ class PaymentForm(forms.Form):
         )
 
         # Email Managers
-        mail_managers(
-            subject=f"Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
-            message=None,
-            fail_silently=True,
-            html_message=html_message
-        )
+        try:
+            msg = EmailMessage(
+                f"Payment for {self.cleaned_data['first_name']} {self.cleaned_data['last_name']} - ${self.cleaned_data['amount']}",
+                html_message,
+                settings.DEFAULT_FROM_EMAIL,
+                settings.MANAGERS,
+                reply_to=[settings.DEFAULT_FROM_EMAIL]
+            )
+            msg.content_subtype = 'html'
+            msg.send()
+        except Exception:
+            pass
 
         # If Coupon Code is one-time-use
         try:
@@ -256,7 +268,32 @@ class Payment(generic.FormView):
             'process_amount': str(result.process_amount)
         }
 
+    @staticmethod
+    def detect_fraud(form):
+        # Credit Card Number
+        if models.Fraud.objects.filter(fraud_type='ccn', is_active=True,
+                                       name=form.cleaned_data['credit_card_number']).exists():
+            return True
+
+        # Email Address
+        elif models.Fraud.objects.filter(fraud_type='email', is_active=True,
+                                         name=form.cleaned_data['email'].lower()).exists():
+            return True
+
+        # IP Address
+        elif models.Fraud.objects.filter(fraud_type='ipaddress', is_active=True,
+                                         name=form.cleaned_data['ipaddress']).exists():
+            return True
+
+        # Success - Nothing bad detected
+        else:
+            return False
+
     def form_valid(self, form):
+        # Detect Fraud
+        if self.detect_fraud(form):
+            return redirect('client-payment-blocked')
+
         # Process Credit Card
         try:
             form.charge()
@@ -292,3 +329,19 @@ class Confirmation(generic.TemplateView):
             raise Http404('Class Type does not exist')
 
         return result.process_amount
+
+
+class Blocked(generic.TemplateView):
+    """
+    Client - Payment - Blocked
+    """
+
+    template_name = 'client/payment/blocked.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['description'] = 'Payment - Blocked'
+        context['keywords'] = ''
+        context['title'] = 'Payment - Blocked'
+
+        return context

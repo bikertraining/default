@@ -1,7 +1,6 @@
 # Django Modules
 django
 django-cors-headers
-django-honeypot
 
 # Other Modules
 gunicorn

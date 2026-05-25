@@ -1,5 +1,13 @@
 {% extends "admin/base.html" %}
 
+{% block style %}
+    <style>
+        div {
+            -webkit-print-color-adjust: exact;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div class="my-3 mx-1">
         <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
@@ -35,27 +43,14 @@
         </div>
 
         <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
-            Drivers License Number
+            Drivers License Information
         </div>
 
         <div class="ps-2 py-2">
-            {{ registration.dln }}
-        </div>
-
-        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
-            Date of Birth
-        </div>
-
-        <div class="ps-2 py-2">
-            {{ registration.dob }}
-        </div>
-
-        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
-            License State of Issue
-        </div>
-
-        <div class="ps-2 py-2">
-            {{ registration.dls }}
+            License: {{ registration.dln }}<br>
+            State: {{ registration.state }}<br>
+            Date of Birth: {{ registration.dob }}<br>
+            Age: {{ registration.dob_age }} Years Old
         </div>
 
         <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
@@ -64,7 +59,7 @@
 
         <div class="ps-2 py-2">
             <div>
-                {{ registration.schedule_date }} {{ registration.schedule_day }}
+                {{ registration.schedule_date }} ({{ registration.schedule_day }})
             </div>
 
             <div>
@@ -77,7 +72,8 @@
         </div>
 
         <div class="ps-2 py-2">
-            {{ registration.credit_card_number }} {% if registration.coupon_code != '' %}with Coupon Code: {{ registration.coupon_code }}{% endif %}
+            {{ registration.credit_card_number }} {% if registration.coupon_code != '' %}with Coupon Code:
+            {{ registration.coupon_code }}{% endif %}
         </div>
 
         <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
@@ -86,6 +82,22 @@
 
         <div class="ps-2 py-2">
             {{ registration.xpl }}
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            I HAVE READ, UNDERSTAND, AND ACCEPT THE REFUND / CANCELLATION POLICY
+        </div>
+
+        <div class="ps-2 py-2">
+            YES
+        </div>
+
+        <div class="bg-dark-subtle fw-bold ps-2 py-2 text-dark">
+            IP Address
+        </div>
+
+        <div class="ps-2 py-2">
+            {{ registration.ipaddress }}
         </div>
 
         {% if registration.comment != '' %}
@@ -98,12 +110,4 @@
             </div>
         {% endif %}
     </div>
-{% endblock %}
-
-{% block style %}
-    <style>
-        div {
-            -webkit-print-color-adjust: exact;
-        }
-    </style>
 {% endblock %}

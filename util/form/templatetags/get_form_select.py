@@ -12,7 +12,7 @@ def get_form_select(label, name, error_text=None, help_text=None, options=None, 
     if options is None:
         options = {}
 
-    context = (f'<div class="SelectInput{" required" if required else ""}">'
+    context = (f'<div class="SelectInput{" required" if required else ""} mb-3">'
                f'<label class="fw-bold form-label" for={name}>{label}</label>'
                f'<select class="form-control{" is-invalid" if error_text else ""}" id="{name}" label="{label}" name="{name}">'
                f'<option value="">-- Select {label} --</option>')

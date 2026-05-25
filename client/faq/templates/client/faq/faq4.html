@@ -1,0 +1,29 @@
+{% load get_business_phone %}
+
+{% block content %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq"
+                    aria-expanded="false"
+                    aria-controls="faq">
+                Can I talk to someone about the courses you offer?
+            </button>
+        </h2>
+
+        <div id="faq"
+             class="accordion-collapse collapse"
+             data-bs-parent="#accordionFaq">
+            <div class="accordion-body">
+                Of course, call or text us at
+
+                <a href="tel:{% get_business_phone True %}"
+                   class="text-decoration-none">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load get_business_phone %}
+
+{% block content %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq20"
+                    aria-expanded="false"
+                    aria-controls="faq20">
+                I have an out-of-state driver's license.
+            </button>
+        </h2>
+
+        <div id="faq20"
+             class="accordion-collapse collapse"
+             data-bs-parent="#accordionFaq">
+            <div class="accordion-body">
+                Most states accept out-of-state MSF completion cards. However, there are a few states which require
+                you to take the class in their state. States change their laws regarding this often and it's up to
+                your state to make that final determination.
+
+                <div class="mt-3">
+                    If you plan on getting a Florida driver's license after taking the class. Then it does not matter
+                    where your current license is from so long as it's issued from within the United States.
+                </div>
+
+                <div class="mt-3">
+                    Give us a call or text if you have any questions at
+
+                    <a href="tel:{% get_business_phone True %}"
+                       class="text-decoration-none">
+                        {% get_business_phone False %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

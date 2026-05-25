@@ -1,80 +1,72 @@
-{% extends "client/base.html" %}
-
-{% block schema %}
-    <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "Product",
-          "description": "This course will teach you how to operate a motorcycle safely, and strongly emphasizes the special skills and mental attitude required for dealing with every day riding.",
-          "name": "Basic RiderCourse (BRCu)",
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "price": "{{ price.amount }}",
-            "priceCurrency": "USD"
-          }
-        }
-    </script>
-{% endblock %}
+{% load static %}
 
 {% block content %}
-    <div class="card mt-3">
-        <div class="card-header bg-dark fs-4 text-white">
-            Basic RiderCourse (BRCu)
-        </div>
-
-        <div class="card-body">
-            <div class="card-text">
-                <div>
-                    This course is designed for beginning riders of all ages. The Basic RiderCourse consists of 15 hours
-                    of instruction including approximately 5 hours using the online self-paced ePackage-1 eCourse and 10
-                    hours of riding on the parking lot range. This course will teach you how to operate a motorcycle
-                    safely, and strongly emphasizes the special skills and mental attitude required for dealing with
-                    every day riding.
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-md-6 text-center">
+                    <img src="{% static '/img/stock/brc-531x354.webp' %}"
+                         alt="Basic RiderCourse"
+                         width="531"
+                         height="354"
+                         class="img-fluid rounded shadow">
                 </div>
 
-                <div class="mt-3 fw-bold">
-                    You must be able to ride a two-wheeled bicycle and be at least 16 years old and have either a valid
-                    learners permit or drivers license to enroll in the BRC.
-                </div>
+                <div class="col-md-6">
+                    <h2 class="fw-bold">
+                        Basic RiderCourse
+                    </h2>
 
-                <div class="mt-3">
-                    You will learn about different types of motorcycles, their controls, and how they operate. The Rider
-                    Coaches, all experienced professionals, will advise you on the proper riding gear to ensure comfort
-                    and protection. You will also learn how alcohol and other drugs affect your ability to ride safely.
-                </div>
+                    <div class="mt-3">
+                        ${{ price.amount_brc|slice:":-3" }}
+                    </div>
 
-                <div class="mt-3">
-                    The range is a controlled, off-street, pedestrian-free environment. Students use motorcycles
-                    provided by the school to learn and practice safely and correctly the various maneuvers and
-                    demanding situations encountered in street riding. Riders must pass both a written test and a riding
-                    skills test in order to complete the course. Upon successful completion, you will be exempt from any
-                    requirement to take the State test for your motorcycle endorsement at the driver's license office.
-                </div>
+                    <div class="mt-3">
+                        Designed for new riders with little or no motorcycle experience. Learn the basics of balance,
+                        throttle control, braking, and safe riding habits.
+                    </div>
 
-                <div class="mt-3 fw-bold">
-                    This course meets the State of Florida requirement for obtaining a motorcycle endorsement on your
-                    driver’s license. All students must wear the required protective gear.
-                </div>
+                    <ul class="mt-3">
+                        <li>
+                            2-day course.
+                        </li>
 
-                <div class="mt-3 fw-bold">
-                    Important: You are purchasing a seat in the class of your choice. After you select and confirm the
-                    date of the class that best fits your schedule, fees are nonrefundable. You must attend all
-                    class/range sessions. If you miss a class or range session or for any reason do not fully complete
-                    your class, you can purchase a seat in a subsequent class for ${{ price.re_amount|slice:":-3" }}.
+                        <li>
+                            Training bike included.
+                        </li>
+
+                        <li>
+                            Motorcycle Safety Foundation (MSF) Completion Card.
+                        </li>
+
+                        <li>
+                            Motorcycle basics & controls.
+                        </li>
+
+                        <li>
+                            Slow‑speed balance & maneuvering.
+                        </li>
+
+                        <li>
+                            Basic cornering & braking.
+                        </li>
+
+                        <li>
+                            Safety gear & risk awareness.
+                        </li>
+
+                        <li>
+                            You must be able to balance and ride a 2-wheeled bicycle and be at least 16 years old and
+                            have either a valid learners permit or driver's license.
+                        </li>
+                    </ul>
+
+                    <a href="{% url 'client-schedule-index' %}"
+                       class="btn btn-accent text-dark mt-3">
+                        <i class="bi bi-check2-circle me-1"></i> Enroll in the Basic RiderCourse
+                    </a>
                 </div>
             </div>
         </div>
-
-        <div class="card-footer border-0 text-center"
-             style="background-color: inherit">
-            <div>
-                <a class="btn btn-lg btn-outline-success w-100 mb-3"
-                   href="{% url 'client-schedule-index' %}">
-                    <i class="bi bi-calendar3"></i>
-                    Basic RiderCourse Schedule
-                </a>
-            </div>
-        </div>
-    </div>
+    </section>
 {% endblock %}

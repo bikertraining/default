@@ -1,0 +1,65 @@
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center fs-4">
+                Range Exercises
+            </h2>
+
+            <div class="row g-4 mt-1">
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h3 class="fw-bold fs-4">
+                            Basic RiderCourse
+                        </h3>
+
+                        <div class="mb-3">
+                            Path of travel for each exercise.
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-exercises-brc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h3 class="fw-bold fs-4">
+                            3-Wheel Basic RiderCourse
+                        </h3>
+
+                        <div class="mb-3">
+                            Path of travel for each exercise.
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-exercises-3wbrc' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h3 class="fw-bold fs-4">
+                            Skilled RiderCourse
+                        </h3>
+
+                        <div class="mb-3">
+                            Path of travel for each exercise.
+                        </div>
+
+                        <a href="{% url 'client-resources-downloads-exercises-src' %}"
+                           target="_blank"
+                           class="btn btn-accent btn-sm text-dark">
+                            <i class="bi bi-filetype-pdf me-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

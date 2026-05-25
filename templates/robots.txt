@@ -1,8 +1,14 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /book/
 Disallow: /contact/confirmation
+Disallow: /contact/blocked
+Disallow: /coupon/
+Disallow: /ecourse/
 Disallow: /payment/
+Disallow: /register/blocked/
 Disallow: /team/confirmation
+Disallow: /team/blocked
 
-Sitemap: http://bikertraining.com/sitemap.xml
+Sitemap: https://bikertraining.com/sitemap.xml

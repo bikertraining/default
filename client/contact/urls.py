@@ -13,4 +13,9 @@ urlpatterns = [
         views.Confirmation.as_view(),
         name='client-contact-confirmation'
     ),
+    path(
+        'blocked',
+        views.Blocked.as_view(),
+        name='client-contact-blocked'
+    ),
 ]

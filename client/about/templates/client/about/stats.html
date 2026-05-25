@@ -1,0 +1,45 @@
+{% load static %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-0 shadow rounded overflow-hidden">
+                <div class="col-md-6 bg-dark text-white p-5">
+                    <h2 class="fw-bold">
+                        Our Impact
+                    </h2>
+
+                    <div class="mt-3">
+                        We’re proud of the riders we’ve helped shape over the years.
+                    </div>
+
+                    <ul class="mt-4">
+                        <li>
+                            <strong class="accent">15,000+</strong> riders trained
+                        </li>
+
+                        <li>
+                            <strong class="accent">98%</strong> success rate (on first attempt)
+                        </li>
+
+                        <li>
+                            <strong class="accent">20+</strong> years of certified instruction
+                        </li>
+
+                        <li>
+                            <strong class="accent">5‑star</strong> student satisfaction
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 bg-light p-5">
+                    <img src="{% static '/img/stock/impact-500x333.webp' %}"
+                         alt="Our Impact"
+                         width="500"
+                         height="333"
+                         class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

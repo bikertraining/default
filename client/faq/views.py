@@ -13,9 +13,12 @@ class Index(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['description'] = 'Frequently Asked Questions'
-        context['keywords'] = 'frequently asked questions, faq'
-        context['title'] = 'FAQ'
+        context['description'] = ('Find answers to common questions about motorcycle training, licensing, scheduling, '
+                                  'requirements, payments, and what to expect on class day.')
+        context['keywords'] = ('keywords" content="motorcycle training FAQ, rider course questions, '
+                               'motorcycle license questions, Basic RiderCourse FAQ, motorcycle class requirements, '
+                               'motorcycle training info')
+        context['title'] = 'FAQ – Motorcycle Training Questions & Answers'
         context['price'] = self.get_price()
 
         return context

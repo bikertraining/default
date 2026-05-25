@@ -5,125 +5,178 @@
 {% load get_business_phone %}
 
 {% block content %}
-    <h1 class="fs-4 mt-3">
-        <i class="bi bi-bicycle"></i>
-        Registration Confirmation
-    </h1>
+    <!-- Hero (Dark) -->
+    <section class="bg-dark text-white">
+        <div class="container py-3">
+            <h1 class="fw-bold fs-3">
+                Registration Confirmation
+            </h1>
 
-    <div class="mt-3">
-        Thank you for registering for one of our motorcycle courses.
-    </div>
-
-    <div class="mt-3">
-        Soon you will receive an email confirming your registration. The confirmation email will contain all the
-        information you need to know to come prepared for class.
-    </div>
-
-    <div class="mt-3">
-        If for some reason you do not receive the email within 24 hours please call us at
-
-        <a class="text-decoration-none"
-           href="tel:{% get_business_phone True %}">
-            {% get_business_phone False %}
-        </a>
-    </div>
-
-    {% if class_type != 'src' %}
-        <div class="mt-3">
-            Please complete the ePackage-1 eCourse prior to the first day of class. Please check your email confirmation
-            for a unique link. You can also use the button below to begin the registration process for the ePackage-1
-            eCourse.
+            <div class="lead mt-3">
+                Thank you for registering for one of our motorcycle courses.
+            </div>
         </div>
-    {% endif %}
+    </section>
 
-    {% if class_type == '3wbrc' %}
-        <div class="mt-3">
-            <a class="btn btn-lg btn-success mb-3"
-               href="{% url 'client-ecourse-index' '3wbrc' %}">
-                <i class="bi bi-link-45deg"></i>
-                Click here to begin the ePackage-1 eCourse
-            </a>
+    <!-- Payment Links (Light) -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center fs-4">
+                Important Information
+            </h2>
+
+            <div class="mt-3">
+                Soon you will receive an email confirming your registration. The confirmation email will contain all the
+                information you need to know to come prepared for class.
+            </div>
+
+            <div class="mt-3">
+                If for some reason you do not receive the email within 24 hours please call or text us at
+
+                <a href="tel:{% get_business_phone True %}"
+                   class="text-decoration-none">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+
+            {% if class_type != 'src' %}
+                <div class="row g-4 mt-1">
+                    <div class="col-md-6">
+                        <div class="p-4 bg-white shadow rounded resource-card">
+                            <h3 class="fw-bold fs-4">
+                                ePackage-1 eCourse
+                            </h3>
+
+                            <div class="mb-3">
+                                Please complete the ePackage-1 eCourse prior to the first day of class.
+                            </div>
+
+                            <div>
+                                Please check
+                                your email confirmation for a unique link.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="p-4 bg-white shadow rounded resource-card">
+                            <h3 class="fw-bold fs-4">
+                                Begin the ePackage-1 eCourse
+                            </h3>
+
+                            <div class="mb-3">
+                                Use the button below to enroll in the MSF ePackage-1 eCourse.
+                            </div>
+
+                            {% if class_type == '3wbrc' %}
+                                <a href="{% url 'client-ecourse-index' '3wbrc' %}"
+                                   class="btn btn-sm btn-success">
+                                    <i class="bi bi-link-45deg me-1"></i> Begin ePackage-1 eCourse
+                                </a>
+                            {% endif %}
+
+                            {% if class_type == 'brc' %}
+                                <a href="{% url 'client-ecourse-index' 'brc' %}"
+                                   class="btn btn-sm btn-accent text-dark">
+                                    <i class="bi bi-link-45deg me-1"></i> Begin ePackage-1 eCourse
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </section>
 
-    {% if class_type == 'brc' %}
-        <div class="mt-3">
-            <a class="btn btn-lg btn-success mb-3"
-               href="{% url 'client-ecourse-index' 'brc' %}">
-                <i class="bi bi-link-45deg"></i>
-                Click here to begin the ePackage-1 eCourse
-            </a>
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="fs-4">
+                            <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i> Refund / Cancellation
+                            Policy
+                        </div>
+
+                        <div class="mt-2">
+                            After submitting your registration, you will receive an email by the next business day (or
+                            before your class starts) confirming your enrollment and providing all details about your
+                            specific class. If you’d prefer to enroll on the phone, give us a call at
+                            <a href="tel:{% get_business_phone True %}"
+                               class="text-decoration-none">
+                                {% get_business_phone False %}
+                            </a>
+                        </div>
+
+                        <div class="mt-2">
+                            When enrolling, you are purchasing a seat in the class of your choice. Once purchased, that
+                            seat is set aside for only your use. Please select the date that will ensure you can attend
+                            each day for the times indicated. You must attend all class/range sessions.
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="fw-bold">Cancellation:</span>
+
+                            All fees are nonrefundable unless students call
+
+                            <a href="tel:{% get_business_phone True %}"
+                               class="text-decoration-none">
+                                {% get_business_phone False %}
+                            </a>
+
+                            or email
+
+                            <a href="mailto: {% get_business_email %}"
+                               class="text-decoration-none">
+                                {% get_business_email %}
+                            </a>
+
+                            6 days prior to their scheduled class to obtain a partial refund. A partial refund is full
+                            tuition minus a processing fee.
+                        </div>
+
+                        <div class="mt-2">
+                            There is a minimum of four students per class. If minimum is not met, student will have the
+                            option to move to any future class or receive a full refund.
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="fw-bold">Postponement:</span>
+
+                            There is no charge for postponement provided the student calls or emails at least 48 hours
+                            prior to the start of their scheduled class. If less than 48 hours prior or if a student
+                            does not complete the entire class, a seat in a subsequent class may be purchased.
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="fw-bold">Late Arrivals:</span>
+
+                            Learning to ride a motorcycle requires skill progression. This progression begins with small
+                            tasks and builds to larger, more complex tasks. It is critical that students arrive on time.
+                            Preferably, come early! If you miss a class or range session, you will not be allowed to
+                            complete the course and will have to purchase another seat in a later class.
+                        </div>
+
+                        <div class="mt-2">
+                            <span class="fw-bold">No Show:</span>
+
+                            If a student decides to skip class or does not provide at least a 48-hour notice for their
+                            absence, they must re-enroll in a future class. A re-enrollment fee will be assessed for
+                            this action. It is essential for students to be aware of this policy regarding attendance
+                            and to take appropriate action to avoid these consequences.
+                        </div>
+
+                        {% if class_type != 'src' %}
+                            <div class="mt-2">
+                                <span class="fw-bold">eCourse:</span>
+
+                                The ePackage-1 eCourse is a national requirement for motorcycle training. You will be
+                                emailed a unique link to complete the eCourse before attending class.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endif %}
-
-    <div class="fw-bold mt-2">
-        REFUND / CANCELLATION POLICY
     </div>
-
-    <div class="mt-2">
-        When enrolling, you are purchasing a seat in the class of your choice. Once purchased, that seat is set aside
-        for only your use. Please select the date that will ensure you can attend each day for the times indicated. You
-        must attend all class/range sessions.
-    </div>
-
-    <div class="mt-2">
-        <span class="fw-bold">Cancellation:</span>
-
-        All fees are nonrefundable unless students call
-
-        <a class="text-decoration-none"
-           href="tel:{% get_business_phone True %}">
-            {% get_business_phone False %}
-        </a>
-
-        or email
-
-        <a href="mailto: {% get_business_email %}"
-           class="text-decoration-none">
-            {% get_business_email %}
-        </a>
-
-        6 days prior to their scheduled class to obtain a partial refund. A partial refund is full tuition minus a
-        ${{ process_amount }} processing fee.
-    </div>
-
-    <div class="mt-2">
-        There is a minimum of four students per class. If minimum is not met, student will have the option to move to
-        any future class or receive a full refund.
-    </div>
-
-    <div class="mt-2">
-        <span class="fw-bold">Postponement:</span>
-
-        There is no charge for postponement provided the student calls or emails at least 48 hours prior to the start of
-        their scheduled class. If less than 48 hours prior or if a student does not complete the entire class, a seat in
-        a subsequent class may be purchased.
-    </div>
-
-    <div class="mt-2">
-        <span class="fw-bold">Late Arrivals:</span>
-
-        Learning to ride a motorcycle requires skill progression. This progression begins with small tasks and builds to
-        larger, more complex tasks. It is critical that students arrive on time. Preferably, come early! If you miss a
-        class or range session, you will not be allowed to complete the course and will have to purchase another seat in
-        a later class.
-    </div>
-
-    <div class="mt-2">
-        <span class="fw-bold">No Show:</span>
-
-        If a student decides to skip class or does not provide at least a 48-hour notice for their absence, they
-        must re-enroll in a future class. A re-enrollment fee will be assessed for this action. It is essential
-        for students to be aware of this policy regarding attendance and to take appropriate action to avoid
-        these consequences.
-    </div>
-
-    {% if class_type != 'src' %}
-        <div class="mt-2">
-            <span class="fw-bold">eCourse:</span>
-
-            The eCourse is a national requirement for motorcycle training. You will be emailed a unique link to complete
-            the eCourse before attending class.
-        </div>
-    {% endif %}
 {% endblock %}

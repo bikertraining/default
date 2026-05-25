@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% load get_form_select %}
+
+{% load get_form_text %}
+
+{% block css %}
+    <link href="{% static '/css/form.css' %}"
+          rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script>
+        function toggleButton() {
+            const submit_button = document.getElementById("submit_button");
+
+            const submit_processing = document.getElementById("submit_processing");
+
+            if (submit_button) {
+                submit_button.style.display = "none"; // Hide the button
+                submit_processing.style.display = "inline-block"; // Show the button
+            } else {
+                submit_processing.style.display = "none"; // Hide the button
+                submit_button.style.display = "inline-block"; // Show the button
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="h3 mb-3 fs-4">
+                            <i class="bi bi-pencil-square me-1"></i> Create Fraud String
+                        </div>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_select label='Type' name='fraud_type' required=True options=form.fields.fraud_type.choices error_text=form.fraud_type.errors value=object.fraud_type %}
+                                </div>
+                            </div>
+
+                            <button class="w-100 btn btn-primary btn-lg"
+                                    type="submit"
+                                    id="submit_button"
+                                    onclick="toggleButton()">
+                                <i class="bi bi-check2-circle me-1"></i> Create Fraud String
+                            </button>
+
+                            <button class="w-100 btn btn-primary btn-lg mt-3"
+                                    type="button"
+                                    id="submit_processing"
+                                    style="display: none;"
+                                    disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                Processing, please wait...
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules -->
+            {% include 'admin/fraud/rules.html' %}
+        </div>
+    </div>
+{% endblock %}

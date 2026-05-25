@@ -1,0 +1,38 @@
+{% block content %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#faq15"
+                    aria-expanded="false"
+                    aria-controls="faq15">
+                How can I postpone my class?
+            </button>
+        </h2>
+
+        <div id="faq15"
+             class="accordion-collapse collapse"
+             data-bs-parent="#accordionFaq">
+            <div class="accordion-body">
+                There is no charge for postponement provided the student calls or emails at least 48 hours prior to
+                their scheduled class. If less than 48 hours prior or if a student does not complete the entire
+                class, a seat in a subsequent class may be purchased:
+
+                <ul class="list-group list-group-numbered mt-3">
+                    <li class="list-group-item border-0">
+                        Basic RiderCourse ${{ price.re_amount_brc|slice:":-3" }}
+                    </li>
+
+                    <li class="list-group-item border-0">
+                        3-Wheel RiderCourse ${{ price.re_amount_3wbrc|slice:":-3" }}
+                    </li>
+
+                    <li class="list-group-item border-0">
+                        Skilled RiderCourse ${{ price.re_amount_src|slice:":-3" }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

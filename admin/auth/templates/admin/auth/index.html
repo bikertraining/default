@@ -6,73 +6,74 @@
 
 {% load get_form_text %}
 
-{% block content %}
-    <div class="back">
-        <div class="div-center border border-dark">
-            <div class="content">
-                <div class="d-flex justify-content-center">
-                    <a href="{% url 'client-main-index' %}">
-                        <img alt="Login"
-                             height="100"
-                             loading="eager"
-                             src="{% static '/img/bikertraining/logo_llc_color.webp' %}"
-                             width="255"/>
-                    </a>
-                </div>
+{% block script %}
+    <script>
+        function toggleButton() {
+            const submit_button = document.getElementById("submit_button");
 
-                <form method="post">
-                    {% csrf_token %}
+            const submit_processing = document.getElementById("submit_processing");
 
-                    <div class="col-md-12">
-                        {% get_form_text label='Username' name='username' required=True error_text=form.username.errors value=form.username.value|default:'' %}
-                    </div>
-
-                    <div class="col-md-12 mt-3">
-                        {% get_form_password label='Password' name='password' required=True error_text=form.password.errors value=form.password.value|default:'' %}
-                    </div>
-
-                    <button class="w-100 btn btn-outline-success mt-3"
-                            onclick="document.getElementById('loading').style.display = 'block'"
-                            type="submit">
-                        Login
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+            if (submit_button) {
+                submit_button.style.display = "none"; // Hide the button
+                submit_processing.style.display = "inline-block"; // Show the button
+            } else {
+                submit_processing.style.display = "none"; // Hide the button
+                submit_button.style.display = "inline-block"; // Show the button
+            }
+        }
+    </script>
 {% endblock %}
 
-{% block style %}
-    <style>
-        .back {
-            background: #e2e2e2;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-        }
+{% block content %}
+    <!-- Login -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="p-4 bg-white shadow rounded">
+                        <h2 class="text-center mb-3">
+                            <a href="{% url 'client-main-index' %}">
+                                <img src="{% static '/img/bikertraining/logo_llc_color.webp' %}"
+                                     alt="Login"
+                                     width="255"
+                                     height="100"
+                                     loading="eager"/>
+                            </a>
+                        </h2>
 
-        .content {
-            display: table-cell;
-            vertical-align: middle;
-        }
+                        <form method="post">
+                            {% csrf_token %}
 
-        .div-center {
-            width: 400px;
-            height: 400px;
-            background-color: #fff;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            max-width: 100%;
-            max-height: 100%;
-            overflow: auto;
-            padding: 1em 2em;
-            border-bottom: 2px solid #ccc;
-            display: table;
-        }
-    </style>
+                            <div class="mb-3">
+                                {% get_form_text label='Username' name='username' required=True error_text=form.username.errors value=form.username.value|default:'' %}
+                            </div>
+
+                            <div class="mb-3">
+                                {% get_form_password label='Password' name='password' required=True error_text=form.password.errors value=form.password.value|default:'' %}
+                            </div>
+
+                            <button class="w-100 btn btn-accent btn-lg"
+                                    type="submit"
+                                    id="submit_button"
+                                    onclick="toggleButton()">
+                                <i class="bi bi-check2-circle me-1"></i> Login
+                            </button>
+
+                            <button class="w-100 btn btn-primary btn-lg"
+                                    type="button"
+                                    id="submit_processing"
+                                    style="display: none;"
+                                    disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                Processing, please wait...
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

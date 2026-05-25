@@ -1,0 +1,47 @@
+{% load static %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-md-6 order-md-2">
+                    <img src="{% static '/img/stock/approach-600x400.webp' %}"
+                         alt="Our Training Approach"
+                         width="600"
+                         height="400"
+                         class="img-fluid rounded shadow">
+                </div>
+
+                <div class="col-md-6 order-md-1">
+                    <h2 class="fw-bold fs-4">
+                        Our Training Approach
+                    </h2>
+
+                    <div class="mt-3">
+                        We combine proven safety techniques with modern motorcycle handling skills to create a balanced,
+                        effective training experience. Our courses are designed to meet riders where they are — whether
+                        you’re touching a motorcycle for the first time or refining advanced maneuvers.
+                    </div>
+
+                    <ul class="mt-3">
+                        <li>
+                            Hands‑on, real‑world training
+                        </li>
+
+                        <li>
+                            Small class sizes for personalized coaching
+                        </li>
+
+                        <li>
+                            Modern training motorcycles and equipment
+                        </li>
+
+                        <li>
+                            Supportive, confidence‑building environment
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

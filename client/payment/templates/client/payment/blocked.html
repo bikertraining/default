@@ -1,0 +1,41 @@
+{% extends "client/base.html" %}
+
+{% block content %}
+    <section class="bg-dark text-white">
+        <div class="container py-3">
+            <h1 class="fw-bold fs-3">
+                Fraud Detection
+            </h1>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="mb-3">
+                Unfortunately, we could not validate your request.
+            </div>
+
+            <div class="mb-3 text-danger fw-bolder">
+                Your credit card was not charged.
+            </div>
+
+            <div class="mb-3">
+                Possible reasons include:
+            </div>
+
+            <ul class="list-group list-group-numbered mt-3">
+                <li class="list-group-item border-0 bg-light">
+                    Your IP Address has been blocked.
+                </li>
+
+                <li class="list-group-item border-0 bg-light">
+                    We have detected fraudulent activity.
+                </li>
+            </ul>
+
+            <div class="mt-3">
+                You will need to come to Pensacola Harley-Davidson to pay in person.
+            </div>
+        </div>
+    </section>
+{% endblock %}

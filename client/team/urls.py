@@ -14,6 +14,11 @@ urlpatterns = [
         name='client-team-confirmation'
     ),
     path(
+        'blocked',
+        views.Blocked.as_view(),
+        name='client-team-blocked'
+    ),
+    path(
         'faq',
         views.Faq.as_view(),
         name='client-team-faq'

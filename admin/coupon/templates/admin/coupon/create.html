@@ -2,50 +2,92 @@
 
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static '/css/form.css' %}">
-{% endblock %}
-
 {% load get_form_select %}
 
 {% load get_form_switch %}
 
 {% load get_form_text %}
 
+{% block css %}
+    <link href="{% static '/css/form.css' %}"
+          rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script>
+        function toggleButton() {
+            const submit_button = document.getElementById("submit_button");
+
+            const submit_processing = document.getElementById("submit_processing");
+
+            if (submit_button) {
+                submit_button.style.display = "none"; // Hide the button
+                submit_processing.style.display = "inline-block"; // Show the button
+            } else {
+                submit_processing.style.display = "none"; // Hide the button
+                submit_button.style.display = "inline-block"; // Show the button
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
-    <div class="mt-3">
-        <div class="d-inline-flex">
-            <form method="post">
-                {% csrf_token %}
-
-                <div class="row">
-                    <div class="col-md-6">
-                        {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
-                    </div>
-
-                    <div class="col-md-6">
-                        {% get_form_select label='Class Type' name='class_type' required=True options=form.fields.class_type.choices error_text=form.class_type.errors value=form.class_type.value|default:'' %}
-                    </div>
-
-                    <div class="col-md-6 mt-3">
-                        {% get_form_text label='Amount' name='amount' required=True help_text="Amount to be discounted" error_text=form.amount.errors value=form.amount.value|default:'' %}
-                    </div>
-
-                    <div class="col-md-6 mt-3">
-                        {% get_form_switch label='Active' name='is_active' value=False %}
-
-                        <div class="mt-3">
-                            {% get_form_switch label='One Time Use' name='one_time_use' value=False %}
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="h3 mb-3 fs-4">
+                            <i class="bi bi-pencil-square me-1"></i> Create Coupon
                         </div>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=form.name.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_select label='Class Type' name='class_type' required=True options=form.fields.class_type.choices error_text=form.class_type.errors value=form.class_type.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_text label='Amount' name='amount' required=True help_text="Amount to be discounted" error_text=form.amount.errors value=form.amount.value|default:'' %}
+                                </div>
+
+                                <div class="col-md-12">
+                                    {% get_form_switch label='Active' name='is_active' value=False %}
+                                </div>
+
+                                <div class="col-md-12 mt-3">
+                                    {% get_form_switch label='One Time Use' name='one_time_use' value=False %}
+                                </div>
+                            </div>
+
+                            <button class="w-100 btn btn-primary btn-lg mt-3"
+                                    type="submit"
+                                    id="submit_button"
+                                    onclick="toggleButton()">
+                                <i class="bi bi-check2-circle me-1"></i> Create Coupon
+                            </button>
+
+                            <button class="w-100 btn btn-primary btn-lg mt-3"
+                                    type="button"
+                                    id="submit_processing"
+                                    style="display: none;"
+                                    disabled>
+                                <span class="spinner-border spinner-border-sm"
+                                      role="status"
+                                      aria-hidden="true">
+                                </span>
+                                Processing, please wait...
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                <button class="px-4 btn btn-outline-success"
-                        onclick="document.getElementById('loading').style.display = 'block'"
-                        type="submit">
-                    Create
-                </button>
-            </form>
+            </div>
         </div>
     </div>
 {% endblock %}

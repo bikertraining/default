@@ -3,40 +3,83 @@
 {% load get_business_phone %}
 
 {% block content %}
-    <h1 class="text-center fs-4 mt-3">
-        Please choose a class type:
-    </h1>
+    <!-- Hero (Dark) -->
+    <section class="bg-dark text-white">
+        <div class="container py-3">
+            <h1 class="fw-bold fs-3">
+                Pensacola Harley-Davidson
+            </h1>
 
-    <div class="fs-3 fw-bold mt-5 mb-3 text-center">
-        <a class="btn btn-lg btn-success mb-3"
-           href="{% url 'client-payment-class-type' 'brc' %}">
-            <i class="bi bi-link-45deg"></i>
-            Basic RiderCourse
-        </a>
-    </div>
+            <div class="lead mt-3">
+                If you are not sure, please call us at
 
-    <div class="fs-3 fw-bold mb-3 text-center">
-        <a class="btn btn-lg btn-success mb-3"
-           href="{% url 'client-payment-class-type' '3wbrc' %}">
-            <i class="bi bi-link-45deg"></i>
-            3-Wheel Basic RiderCourse
-        </a>
-    </div>
+                <a href="tel:{% get_business_phone True %}"
+                   class="text-decoration-none">
+                    {% get_business_phone False %}
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <div class="fs-3 fw-bold text-center">
-        <a class="btn btn-lg btn-success mb-3"
-           href="{% url 'client-payment-class-type' 'src' %}">
-            <i class="bi bi-link-45deg"></i>
-            Skilled RiderCourse
-        </a>
-    </div>
+    <!-- Payment Links (Light) -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center fs-4">
+                Choose Your Class
+            </h2>
 
-    <div class="fs-4 fw-bold text-center mt-3">
-        If you are not sure, please call us at
+            <div class="row g-4 mt-1">
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            Basic RiderCourse
+                        </h3>
 
-        <a class="text-decoration-none"
-           href="tel:{% get_business_phone True %}">
-            {% get_business_phone False %}
-        </a>
-    </div>
+                        <div class="mb-3">
+                            Students enrolled in the Basic RiderCourse via Pensacola Harley-Davidson.
+                        </div>
+
+                        <a href="{% url 'client-payment-class-type' 'brc' %}"
+                           class="btn btn-accent btn-md text-dark fw-bold">
+                            <i class="bi bi-link-45deg me-1"></i> Pay Online Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            3-Wheel Basic RiderCourse
+                        </h3>
+
+                        <div class="mb-3">
+                            Students enrolled in the 3-Wheel Basic RiderCourse via Pensacola Harley-Davidson.
+                        </div>
+
+                        <a href="{% url 'client-payment-class-type' '3wbrc' %}"
+                           class="btn btn-accent btn-md text-dark fw-bold">
+                            <i class="bi bi-link-45deg me-1"></i> Pay Online Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-white shadow rounded resource-card">
+                        <h3 class="fw-bold fs-4">
+                            Skilled RiderCourse
+                        </h3>
+
+                        <div class="mb-3">
+                            Students enrolled in the Skilled RiderCourse via Pensacola Harley-Davidson.
+                        </div>
+
+                        <a href="{% url 'client-payment-class-type' 'src' %}"
+                           class="btn btn-accent btn-md text-dark fw-bold">
+                            <i class="bi bi-link-45deg me-1"></i> Pay Online Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

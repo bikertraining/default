@@ -1,0 +1,46 @@
+{% extends "client/base.html" %}
+
+{% load get_gui_url %}
+
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Biker Training Reviews",
+          "url": "{% get_gui_url %}{{ request.get_full_path }}",
+    "description": "Student reviews and testimonials for Biker Training motorcycle safety courses.",
+    "about": {
+      "@type": "Organization",
+      "name": "Biker Training",
+      "url": "{% get_gui_url %}"
+    }
+  }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero (Dark) -->
+    {% include 'client/reviews/hero.html' %}
+
+    <section class="bg-light text-center py-5">
+        <a href="https://g.page/r/CaMSTx2-XMhIEBM/review"
+           target="_blank"
+           class="btn btn-accent btn-lg text-dark fw-semibold"
+           aria-label="Leave A Review">
+            Leave A Review
+        </a>
+    </section>
+
+    <!-- Review 1 (Light) -->
+    {% include 'client/reviews/review1.html' %}
+
+    <!-- Review 2 (Dark) -->
+    {% include 'client/reviews/review2.html' %}
+
+    <!-- Review 3 (Light) -->
+    {% include 'client/reviews/review3.html' %}
+
+    <!-- Review 4 (Dark) -->
+    {% include 'client/reviews/review4.html' %}
+{% endblock %}

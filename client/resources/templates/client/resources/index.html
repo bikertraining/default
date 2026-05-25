@@ -1,0 +1,60 @@
+{% extends "client/base.html" %}
+
+{% load get_gui_url %}
+
+{% block schema %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Motorcycle Training Resources",
+          "description": "A collection of motorcycle training guides, safety tips, checklists, and licensing information.",
+          "hasPart": [
+            {
+              "@type": "Article",
+              "headline": "Motorcycle Class Preparation Checklist",
+              "url": "{% get_gui_url %}{{ request.get_full_path }}"
+            },
+            {
+              "@type": "Article",
+              "headline": "Beginner Motorcycle Safety Tips",
+              "url": "{% get_gui_url %}{{ request.get_full_path }}"
+            },
+            {
+              "@type": "Article",
+              "headline": "How to Get Your Motorcycle License",
+              "url": "{% get_gui_url %}{{ request.get_full_path }}"
+            }
+          ]
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero (Dark) -->
+    {% include 'client/resources/hero.html' %}
+
+    <!-- Waivers -->
+    {% include 'client/resources/waivers.html' %}
+
+    <!-- Study Materials -->
+    {% include 'client/resources/study.html' %}
+
+    <!-- Riding Tips -->
+    {% include 'client/resources/tips.html' %}
+
+    <!-- TCLOCS (Dark) -->
+    {% include 'client/resources/tclocs.html' %}
+
+    <!-- Range Exercises -->
+    {% include 'client/resources/exercises.html' %}
+
+    <!-- Code of Conduct (Dark) -->
+    {% include 'client/resources/coc.html' %}
+
+    <!-- General Policies -->
+    {% include 'client/resources/general-policies.html' %}
+
+    <!-- Safety Policies (Dark) -->
+    {% include 'client/resources/safety-policies.html' %}
+{% endblock %}
