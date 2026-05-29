@@ -76,11 +76,16 @@ class Index(generic.FormView):
                                        name=form.cleaned_data['ipaddress']).exists():
             return True
 
-        # Email Address
-        elif models.Fraud.objects.filter(fraud_type='email', is_active=True, name=form.cleaned_data['email']).exists():
+        elif form.cleaned_data['ipaddress'] is None or form.cleaned_data['ipaddress'] == '' or form.cleaned_data[
+            'ipaddress'] == 'None':
             return True
 
-        for item in models.Fraud.objects.filter(fraud_type='general', is_active=True):
+        # Email / General
+        for item in models.Fraud.objects.filter(fraud_type__in=['email', 'general'], is_active=True):
+            # Email Address
+            if item.name.lower() in form.cleaned_data['email'].lower():
+                return True
+
             # Message
             if item.name.lower() in form.cleaned_data['message'].lower():
                 return True
