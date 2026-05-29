@@ -46,7 +46,9 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    {% get_form_text label='Name' name='name' required=True error_text=form.name.errors value=object.name %}
+                                    <span class="fw-bold">Name</span>
+
+                                    <div class="mb-3">{{ object.name }}</div>
                                 </div>
 
                                 <div class="col-md-12">
