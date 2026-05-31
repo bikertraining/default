@@ -164,17 +164,17 @@
     {% endif %}
 
     {% if object_list|length == 0 and class_type == '3wbrc' %}
-        <div class="container py-3 fw-bold text-danger text-center">
+        <div class="container py-3 fw-bold text-danger text-center d-none d-lg-block">
             Sorry but there are no available 3-Wheel classes. However, if you had a group of at least 2 students we can
             add a private class. Call us for more information.
         </div>
     {% elif object_list|length == 0 and class_type == 'src' %}
-        <div class="container py-3 fw-bold text-danger text-center">
+        <div class="container py-3 fw-bold text-danger text-center d-none d-lg-block">
             Sorry but there are no available Skilled Rider classes. However, if you had a group of at least 4 students
             we can add a private class. Call us for more information.
         </div>
     {% elif object_list|length == 0 %}
-        <div class="container py-3 fw-bold text-danger text-center">
+        <div class="container py-3 fw-bold text-danger text-center d-none d-lg-block">
             Sorry but there are no available classes.
         </div>
     {% endif %}
