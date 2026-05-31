@@ -4,6 +4,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import redirect
 from django.template import loader
 from django.views import generic
+from turnstile.fields import TurnstileField
 
 from client.contact import models
 
@@ -22,6 +23,8 @@ class ContactForm(forms.Form):
     name = forms.CharField(required=True)
 
     phone = forms.CharField(required=False)
+
+    turnstile = TurnstileField()
 
     def send_email(self):
         # Compose HTML Message

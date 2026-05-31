@@ -1,6 +1,7 @@
 # Django Modules
 django
 django-cors-headers
+django-turnstile
 
 # Other Modules
 gunicorn
