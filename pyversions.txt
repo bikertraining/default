@@ -1,6 +1,7 @@
 # Django Modules
 django==5.2.14
 django-cors-headers==4.9.0
+django-turnstile==0.1.3
 
 # Other Modules
 gunicorn==26.0.0
