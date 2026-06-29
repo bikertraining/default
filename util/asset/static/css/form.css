@@ -1,0 +1,35 @@
+.required label:after {
+    content: "*";
+    color: #FF0000;
+    font-size: 20px;
+    line-height: 22px;
+    vertical-align: middle;
+    padding-left: 3px;
+}
+
+.TextInput {
+    position: relative;
+    margin-bottom: calc(1em * 1.5);
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    width: 100%;
+}
+
+input[type=text] {
+    border-radius: 5px;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.help-message {
+    left: 0;
+    margin: 4px 0 0 0;
+    font-size: 14px;
+}
